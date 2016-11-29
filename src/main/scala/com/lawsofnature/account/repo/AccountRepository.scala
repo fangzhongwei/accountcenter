@@ -18,3 +18,5 @@ trait AccountRepository extends Tables {
     TmDiamondAccountAutoInc += tmDiamondAccountRow
   }
 }
+
+class AccountRepositoryImpl extends AccountRepository with DBComponent

@@ -13,3 +13,4 @@ project/boot/
 .idea
 *.ipr
 *.iws
+*.log

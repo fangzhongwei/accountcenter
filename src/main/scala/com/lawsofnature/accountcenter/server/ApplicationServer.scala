@@ -6,6 +6,7 @@ import Ice.ObjectImpl
 import com.google.inject.{AbstractModule, Guice}
 import com.google.inject.name.Names
 import com.lawsofnatrue.common.ice.{ConfigHelper, IceServerTemplate, IceServerTemplateImpl}
+import com.lawsofnature.account.repo.{AccountRepository, AccountRepositoryImpl}
 import com.lawsofnature.accountcenter.service.{AccountService, AccountServiceImpl}
 import com.lawsofnature.common.rabbitmq.{RabbitmqConsumerTemplate, RabbitmqConsumerTemplateImpl, RabbitmqProducerTemplate, RabbitmqProducerTemplateImpl}
 import com.lawsofnature.common.service.ConsumeService
@@ -24,6 +25,7 @@ object ApplicationServer extends App{
     override def configure() {
       val map: util.HashMap[String, String] = ConfigHelper.configMap
       Names.bindProperties(binder(), map)
+      bind(classOf[AccountRepository]).to(classOf[AccountRepositoryImpl]).asEagerSingleton()
       bind(classOf[AccountService]).to(classOf[AccountServiceImpl]).asEagerSingleton()
       bind(classOf[RabbitmqConsumerTemplate]).to(classOf[RabbitmqConsumerTemplateImpl]).asEagerSingleton()
     }
