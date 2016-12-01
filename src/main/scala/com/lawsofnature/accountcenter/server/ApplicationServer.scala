@@ -17,8 +17,6 @@ import org.slf4j.LoggerFactory
   * Created by fangzhongwei on 2016/11/21.
   */
 object ApplicationServer extends App{
-
-
   var logger = LoggerFactory.getLogger(this.getClass)
 
   private val injector = Guice.createInjector(new AbstractModule() {
