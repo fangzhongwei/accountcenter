@@ -145,4 +145,18 @@ public class SettleRequest extends Ice.ObjectImpl
     }
 
     public static final long serialVersionUID = 5507623321983448042L;
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("SettleRequest{");
+        sb.append("gameId=").append(gameId);
+        sb.append(", memberId1=").append(memberId1);
+        sb.append(", amount1=").append(amount1);
+        sb.append(", memberId2=").append(memberId2);
+        sb.append(", amount2=").append(amount2);
+        sb.append(", memberId3=").append(memberId3);
+        sb.append(", amount3=").append(amount3);
+        sb.append('}');
+        return sb.toString();
+    }
 }

@@ -28,6 +28,7 @@ lazy val accountserver = (project in file("accountserver")).settings(commonSetti
   libraryDependencies ++= Seq(
     "com.lawsofnature.common" % "common-ice_2.11" % "1.0",
     "com.lawsofnature.common" % "common-mysql_2.11" % "1.0",
+    "com.lawsofnature.common" % "common-error_2.11" % "1.0",
     "com.lawsofnature.account" % "accountcommonlib_2.11" % "1.0"
   )
 )
