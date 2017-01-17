@@ -5,6 +5,7 @@ import com.lawsofnature.connection.DBComponent
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
   * Created by fangzhongwei on 2016/11/21.

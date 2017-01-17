@@ -28,10 +28,10 @@ public class DiamondPrice extends Ice.ObjectImpl
         price = "";
     }
 
-    public DiamondPrice(String code, int acount, String price)
+    public DiamondPrice(String code, int diamondAmount, String price)
     {
         this.code = code;
-        this.acount = acount;
+        this.diamondAmount = diamondAmount;
         this.price = price;
     }
 
@@ -100,7 +100,7 @@ public class DiamondPrice extends Ice.ObjectImpl
     {
         __os.startWriteSlice(ice_staticId(), -1, true);
         __os.writeString(code);
-        __os.writeInt(acount);
+        __os.writeInt(diamondAmount);
         __os.writeString(price);
         __os.endWriteSlice();
     }
@@ -109,14 +109,14 @@ public class DiamondPrice extends Ice.ObjectImpl
     {
         __is.startReadSlice();
         code = __is.readString();
-        acount = __is.readInt();
+        diamondAmount = __is.readInt();
         price = __is.readString();
         __is.endReadSlice();
     }
 
     public String code;
 
-    public int acount;
+    public int diamondAmount;
 
     public String price;
 
@@ -126,5 +126,5 @@ public class DiamondPrice extends Ice.ObjectImpl
         return (DiamondPrice)super.clone();
     }
 
-    public static final long serialVersionUID = 8327185758412231677L;
+    public static final long serialVersionUID = -282026401530647273L;
 }
