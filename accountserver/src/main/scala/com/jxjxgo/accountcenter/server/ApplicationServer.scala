@@ -1,12 +1,14 @@
-package com.lawsofnature.accountcenter.server
+package com.jxjxgo.accountcenter.server
 
 import java.util
 
 import com.google.inject.name.Names
 import com.google.inject.{AbstractModule, Guice}
+import com.jxjxgo.scrooge.thrift.template.{ScroogeThriftServerTemplate, ScroogeThriftServerTemplateImpl}
 import com.lawsofnatrue.common.ice.ConfigHelper
-import com.lawsofnature.account.repo.{AccountRepository, AccountRepositoryImpl}
-import com.lawsofnature.accountcenter.service.{AccountService, AccountServiceImpl}
+import com.jxjxgo.account.repo.{AccountRepository, AccountRepositoryImpl}
+import com.jxjxgo.accountcenter.service.{AccountEndpointImpl, AccountService, AccountServiceImpl}
+import com.twitter.scrooge.ThriftService
 import com.typesafe.config.ConfigFactory
 import org.slf4j.LoggerFactory
 
@@ -22,11 +24,11 @@ object ApplicationServer extends App {
       Names.bindProperties(binder(), map)
       bind(classOf[AccountRepository]).to(classOf[AccountRepositoryImpl]).asEagerSingleton()
       bind(classOf[AccountService]).to(classOf[AccountServiceImpl]).asEagerSingleton()
-//      bind(classOf[RabbitmqConsumerTemplate]).to(classOf[RabbitmqConsumerTemplateImpl]).asEagerSingleton()
+
+      bind(classOf[ThriftService]).to(classOf[AccountEndpointImpl]).asEagerSingleton()
+      bind(classOf[ScroogeThriftServerTemplate]).to(classOf[ScroogeThriftServerTemplateImpl]).asEagerSingleton()
     }
   })
 
-//  private[this] val consumerTemplate: RabbitmqConsumerTemplate = injector.getInstance(classOf[RabbitmqConsumerTemplate])
-//  consumerTemplate.connect
-//  consumerTemplate.startConsume(ConfigFactory.load().getString("account.mq.queue"), injector.getInstance(classOf[AccountService]))
+  injector.getInstance(classOf[ScroogeThriftServerTemplate]).init
 }

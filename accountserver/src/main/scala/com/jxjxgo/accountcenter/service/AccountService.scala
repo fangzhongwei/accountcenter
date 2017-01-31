@@ -1,9 +1,9 @@
-package com.lawsofnature.accountcenter.service
+package com.jxjxgo.accountcenter.service
 
 import java.sql.Timestamp
 import javax.inject.Inject
 
-import com.lawsofnature.account.repo.AccountRepository
+import com.jxjxgo.account.repo.AccountRepository
 import com.lawsofnature.common.exception.{ErrorCode, ServiceException}
 import org.slf4j.{Logger, LoggerFactory}
 import com.jxjxgo.account.rpc.domain._

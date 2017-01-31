@@ -1,4 +1,4 @@
-package com.lawsofnature.account.repo
+package com.jxjxgo.account.repo
 
 import com.lawsofnature.connection.MySQLDBImpl
 

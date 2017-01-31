@@ -1,4 +1,4 @@
-package com.lawsofnature.accountcenter.service
+package com.jxjxgo.accountcenter.service
 
 import javax.inject.Inject
 

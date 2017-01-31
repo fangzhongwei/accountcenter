@@ -1,4 +1,4 @@
-package com.lawsofnature.account.repo
+package com.jxjxgo.account.repo
 
 import com.jxjxgo.account.rpc.domain.SettleRequest
 import com.lawsofnature.connection.DBComponent
