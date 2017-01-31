@@ -3,10 +3,10 @@ package com.lawsofnature.accountcenter.service
 import java.sql.Timestamp
 import javax.inject.Inject
 
-import RpcAccount._
 import com.lawsofnature.account.repo.AccountRepository
 import com.lawsofnature.common.exception.{ErrorCode, ServiceException}
 import org.slf4j.{Logger, LoggerFactory}
+import com.jxjxgo.account.rpc.domain._
 
 /**
   * Created by fangzhongwei on 2016/11/21.
@@ -32,7 +32,7 @@ class AccountServiceImpl @Inject()(accountRepository: AccountRepository) extends
 
   override def createAccount(traceId: String, memberId: Long) = {
     accountRepository.create(accountRepository.TmDiamondAccountRow(0, memberId, 0, new Timestamp(System.currentTimeMillis())))
-    new AccountBaseResponse("0")
+    AccountBaseResponse("0")
   }
 
   override def settle(traceId: String, settleRequest: SettleRequest): AccountBaseResponse = {
@@ -40,8 +40,8 @@ class AccountServiceImpl @Inject()(accountRepository: AccountRepository) extends
     settleRequest.amount1 + settleRequest.amount2 + settleRequest.amount3 == 0 match {
       case true =>
         accountRepository.settle(settleRequest)
-        new AccountBaseResponse("0")
-      case false => new AccountBaseResponse(ErrorCode.EC_GAME_INVALID_RESULT.getCode)
+        AccountBaseResponse("0")
+      case false => AccountBaseResponse(ErrorCode.EC_GAME_INVALID_RESULT.getCode)
     }
   }
 
@@ -50,19 +50,17 @@ class AccountServiceImpl @Inject()(accountRepository: AccountRepository) extends
     val priceArray: Array[DiamondPrice] = new Array[DiamondPrice](seq.size)
     for (i <- 0 to priceArray.size) {
       val p: accountRepository.TmDiamodPriceRow = seq(i)
-      priceArray(i) = new DiamondPrice(p.code, p.amount, p.price.toString())
+      priceArray(i) = DiamondPrice(p.code, p.amount, p.price.toString())
     }
-    new PriceListResponse("0", priceArray)
+    PriceListResponse("0", priceArray)
   }
 
   override def queryDepositOrder(traceId: String, paymentVoucherNo: String): DepositResponse = {
     accountRepository.queryAccountOrderByPaymentVoucherNo(paymentVoucherNo) match {
       case Some(r) =>
-        new DepositResponse("0", r.paymentVoucherNo, r.accountId, r.memberId, r.tradeType, r.tradeStatus, r.diamondAmount, r.amount.toString(), r.gmtCreate.getTime, r.gmtUpdate.getTime)
+        DepositResponse("0", r.paymentVoucherNo, r.accountId, r.memberId, r.tradeType, r.tradeStatus, r.diamondAmount, r.amount.toString(), r.gmtCreate.getTime, r.gmtUpdate.getTime)
       case None =>
-        val response: DepositResponse = new DepositResponse()
-        response.code = ErrorCode.EC_ORDER_PAYMENT_ORDER_NOT_FOUND.getCode
-        response
+        DepositResponse(code = ErrorCode.EC_ORDER_PAYMENT_ORDER_NOT_FOUND.getCode)
     }
   }
 
@@ -80,12 +78,13 @@ class AccountServiceImpl @Inject()(accountRepository: AccountRepository) extends
         r.channelCode match {
           case "Gift" =>
             depositSuccess(paymentOrderNo, amount)
+            DepositRequestResponse(code = "0", paymentVoucherNo = paymentOrderNo, tradeStatus = 99)
+          case _ =>
+            //todo
+            DepositRequestResponse(code = "0", paymentVoucherNo = paymentOrderNo, tradeStatus = 1)
         }
-        new DepositRequestResponse()
       case None =>
-        val response: DepositRequestResponse = new DepositRequestResponse()
-        response.code = ErrorCode.EC_ACCOUNT_NOT_EXIST.getCode
-        response
+        DepositRequestResponse(ErrorCode.EC_ACCOUNT_NOT_EXIST.getCode)
     }
   }
 
@@ -122,19 +121,17 @@ class AccountServiceImpl @Inject()(accountRepository: AccountRepository) extends
     val seq: Seq[accountRepository.TmChannelRow] = accountRepository.getChannelList()
     val channelArray: Array[Channel] = new Array[Channel](seq.size)
     for (i <- 0 to seq.size) {
-      channelArray(i) = new Channel(seq(i).code, seq(i).name)
+      channelArray(i) = Channel(seq(i).code, seq(i).name)
     }
-    new ChannelListResponse("0", channelArray)
+    ChannelListResponse("0", channelArray)
   }
 
   override def getAccount(traceId: String, memberId: Long): DiamondAccountResponse = {
     accountRepository.getAccount(memberId) match {
       case Some(r) =>
-        new DiamondAccountResponse("0", r.accountId, r.memberId, r.amount, r.gmtCreate.getTime, r.gmtUpdate.get.getTime)
+        DiamondAccountResponse("0", r.accountId, r.memberId, r.amount, r.gmtCreate.getTime, r.gmtUpdate.get.getTime)
       case None =>
-        val response: DiamondAccountResponse = new DiamondAccountResponse()
-        response.code = ErrorCode.EC_ACCOUNT_NOT_EXIST.getCode
-        response
+        DiamondAccountResponse(ErrorCode.EC_ACCOUNT_NOT_EXIST.getCode)
     }
   }
 }

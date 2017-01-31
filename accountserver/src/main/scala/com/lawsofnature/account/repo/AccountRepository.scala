@@ -1,6 +1,6 @@
 package com.lawsofnature.account.repo
 
-import RpcAccount.SettleRequest
+import com.jxjxgo.account.rpc.domain.SettleRequest
 import com.lawsofnature.connection.DBComponent
 
 import scala.concurrent.duration.Duration
