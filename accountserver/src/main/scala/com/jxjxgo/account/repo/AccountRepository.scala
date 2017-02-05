@@ -1,7 +1,7 @@
 package com.jxjxgo.account.repo
 
 import com.jxjxgo.account.rpc.domain.SettleRequest
-import com.lawsofnature.connection.DBComponent
+import com.jxjxgo.mysql.connection.DBComponent
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}

@@ -4,9 +4,9 @@ import java.sql.Timestamp
 import javax.inject.Inject
 
 import com.jxjxgo.account.repo.AccountRepository
-import com.lawsofnature.common.exception.{ErrorCode, ServiceException}
-import org.slf4j.{Logger, LoggerFactory}
 import com.jxjxgo.account.rpc.domain._
+import com.jxjxgo.common.exception.{ErrorCode, ServiceException}
+import org.slf4j.{Logger, LoggerFactory}
 
 /**
   * Created by fangzhongwei on 2016/11/21.
@@ -31,7 +31,8 @@ class AccountServiceImpl @Inject()(accountRepository: AccountRepository) extends
   private val logger: Logger = LoggerFactory.getLogger(getClass)
 
   override def createAccount(traceId: String, memberId: Long) = {
-    accountRepository.create(accountRepository.TmDiamondAccountRow(0, memberId, 0, new Timestamp(System.currentTimeMillis())))
+    val gmtCreate: Timestamp = new Timestamp(System.currentTimeMillis())
+    accountRepository.create(accountRepository.TmDiamondAccountRow(0, memberId, 0, gmtCreate, Some(gmtCreate)))
     AccountBaseResponse("0")
   }
 
@@ -48,7 +49,7 @@ class AccountServiceImpl @Inject()(accountRepository: AccountRepository) extends
   override def getPriceList(traceId: String): PriceListResponse = {
     val seq: Seq[accountRepository.TmDiamodPriceRow] = accountRepository.getPriceList()
     val priceArray: Array[DiamondPrice] = new Array[DiamondPrice](seq.size)
-    for (i <- 0 to priceArray.size) {
+    for (i <- 0 to priceArray.size - 1) {
       val p: accountRepository.TmDiamodPriceRow = seq(i)
       priceArray(i) = DiamondPrice(p.code, p.amount, p.price.toString())
     }
@@ -120,7 +121,7 @@ class AccountServiceImpl @Inject()(accountRepository: AccountRepository) extends
   override def getChannelList(traceId: String): ChannelListResponse = {
     val seq: Seq[accountRepository.TmChannelRow] = accountRepository.getChannelList()
     val channelArray: Array[Channel] = new Array[Channel](seq.size)
-    for (i <- 0 to seq.size) {
+    for (i <- 0 to seq.size - 1) {
       channelArray(i) = Channel(seq(i).code, seq(i).name)
     }
     ChannelListResponse("0", channelArray)

@@ -5,9 +5,9 @@ import java.util
 import com.google.inject.name.Names
 import com.google.inject.{AbstractModule, Guice}
 import com.jxjxgo.scrooge.thrift.template.{ScroogeThriftServerTemplate, ScroogeThriftServerTemplateImpl}
-import com.lawsofnatrue.common.ice.ConfigHelper
 import com.jxjxgo.account.repo.{AccountRepository, AccountRepositoryImpl}
 import com.jxjxgo.accountcenter.service.{AccountEndpointImpl, AccountService, AccountServiceImpl}
+import com.jxjxgo.common.helper.ConfigHelper
 import com.twitter.scrooge.ThriftService
 import com.typesafe.config.ConfigFactory
 import org.slf4j.LoggerFactory
