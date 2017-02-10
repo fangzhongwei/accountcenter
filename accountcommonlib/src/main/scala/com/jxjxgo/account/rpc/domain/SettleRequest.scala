@@ -27,17 +27,19 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
   val Struct = new TStruct("SettleRequest")
   val GameIdField = new TField("gameId", TType.I64, 1)
   val GameIdFieldManifest = implicitly[Manifest[Long]]
-  val MemberId1Field = new TField("memberId1", TType.I64, 2)
+  val DeviceTypeField = new TField("deviceType", TType.I32, 2)
+  val DeviceTypeFieldManifest = implicitly[Manifest[Int]]
+  val MemberId1Field = new TField("memberId1", TType.I64, 3)
   val MemberId1FieldManifest = implicitly[Manifest[Long]]
-  val Amount1Field = new TField("amount1", TType.I32, 3)
+  val Amount1Field = new TField("amount1", TType.I32, 4)
   val Amount1FieldManifest = implicitly[Manifest[Int]]
-  val MemberId2Field = new TField("memberId2", TType.I64, 4)
+  val MemberId2Field = new TField("memberId2", TType.I64, 5)
   val MemberId2FieldManifest = implicitly[Manifest[Long]]
-  val Amount2Field = new TField("amount2", TType.I32, 5)
+  val Amount2Field = new TField("amount2", TType.I32, 6)
   val Amount2FieldManifest = implicitly[Manifest[Int]]
-  val MemberId3Field = new TField("memberId3", TType.I64, 6)
+  val MemberId3Field = new TField("memberId3", TType.I64, 7)
   val MemberId3FieldManifest = implicitly[Manifest[Long]]
-  val Amount3Field = new TField("amount3", TType.I32, 7)
+  val Amount3Field = new TField("amount3", TType.I32, 8)
   val Amount3FieldManifest = implicitly[Manifest[Int]]
 
   /**
@@ -49,6 +51,16 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
       false,
       false,
       GameIdFieldManifest,
+      _root_.scala.None,
+      _root_.scala.None,
+      immutable$Map.empty[String, String],
+      immutable$Map.empty[String, String]
+    ),
+    new ThriftStructFieldInfo(
+      DeviceTypeField,
+      false,
+      false,
+      DeviceTypeFieldManifest,
       _root_.scala.None,
       _root_.scala.None,
       immutable$Map.empty[String, String],
@@ -132,6 +144,11 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
           val field = original.gameId
           field
         },
+      deviceType =
+        {
+          val field = original.deviceType
+          field
+        },
       memberId1 =
         {
           val field = original.memberId1
@@ -171,6 +188,7 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
   private[this] def lazyDecode(_iprot: LazyTProtocol): SettleRequest = {
 
     var gameId: Long = 0L
+    var deviceType: Int = 0
     var memberId1: Long = 0L
     var amount1: Int = 0
     var memberId2: Long = 0L
@@ -205,6 +223,20 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
             }
           case 2 =>
             _field.`type` match {
+              case TType.I32 =>
+    
+                deviceType = readDeviceTypeValue(_iprot)
+              case _actualType =>
+                val _expectedType = TType.I32
+                throw new TProtocolException(
+                  "Received wrong type for field 'deviceType' (expected=%s, actual=%s).".format(
+                    ttypeToString(_expectedType),
+                    ttypeToString(_actualType)
+                  )
+                )
+            }
+          case 3 =>
+            _field.`type` match {
               case TType.I64 =>
     
                 memberId1 = readMemberId1Value(_iprot)
@@ -217,7 +249,7 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
                   )
                 )
             }
-          case 3 =>
+          case 4 =>
             _field.`type` match {
               case TType.I32 =>
     
@@ -231,7 +263,7 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
                   )
                 )
             }
-          case 4 =>
+          case 5 =>
             _field.`type` match {
               case TType.I64 =>
     
@@ -245,7 +277,7 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
                   )
                 )
             }
-          case 5 =>
+          case 6 =>
             _field.`type` match {
               case TType.I32 =>
     
@@ -259,7 +291,7 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
                   )
                 )
             }
-          case 6 =>
+          case 7 =>
             _field.`type` match {
               case TType.I64 =>
     
@@ -273,7 +305,7 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
                   )
                 )
             }
-          case 7 =>
+          case 8 =>
             _field.`type` match {
               case TType.I32 =>
     
@@ -303,6 +335,7 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
       _start_offset,
       _iprot.offset,
       gameId,
+      deviceType,
       memberId1,
       amount1,
       memberId2,
@@ -324,6 +357,7 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
 
   private[this] def eagerDecode(_iprot: TProtocol): SettleRequest = {
     var gameId: Long = 0L
+    var deviceType: Int = 0
     var memberId1: Long = 0L
     var amount1: Int = 0
     var memberId2: Long = 0L
@@ -355,6 +389,19 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
             }
           case 2 =>
             _field.`type` match {
+              case TType.I32 =>
+                deviceType = readDeviceTypeValue(_iprot)
+              case _actualType =>
+                val _expectedType = TType.I32
+                throw new TProtocolException(
+                  "Received wrong type for field 'deviceType' (expected=%s, actual=%s).".format(
+                    ttypeToString(_expectedType),
+                    ttypeToString(_actualType)
+                  )
+                )
+            }
+          case 3 =>
+            _field.`type` match {
               case TType.I64 =>
                 memberId1 = readMemberId1Value(_iprot)
               case _actualType =>
@@ -366,7 +413,7 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
                   )
                 )
             }
-          case 3 =>
+          case 4 =>
             _field.`type` match {
               case TType.I32 =>
                 amount1 = readAmount1Value(_iprot)
@@ -379,7 +426,7 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
                   )
                 )
             }
-          case 4 =>
+          case 5 =>
             _field.`type` match {
               case TType.I64 =>
                 memberId2 = readMemberId2Value(_iprot)
@@ -392,7 +439,7 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
                   )
                 )
             }
-          case 5 =>
+          case 6 =>
             _field.`type` match {
               case TType.I32 =>
                 amount2 = readAmount2Value(_iprot)
@@ -405,7 +452,7 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
                   )
                 )
             }
-          case 6 =>
+          case 7 =>
             _field.`type` match {
               case TType.I64 =>
                 memberId3 = readMemberId3Value(_iprot)
@@ -418,7 +465,7 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
                   )
                 )
             }
-          case 7 =>
+          case 8 =>
             _field.`type` match {
               case TType.I32 =>
                 amount3 = readAmount3Value(_iprot)
@@ -443,6 +490,7 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
 
     new Immutable(
       gameId,
+      deviceType,
       memberId1,
       amount1,
       memberId2,
@@ -458,6 +506,7 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
 
   def apply(
     gameId: Long = 0L,
+    deviceType: Int = 0,
     memberId1: Long = 0L,
     amount1: Int = 0,
     memberId2: Long = 0L,
@@ -467,6 +516,7 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
   ): SettleRequest =
     new Immutable(
       gameId,
+      deviceType,
       memberId1,
       amount1,
       memberId2,
@@ -475,7 +525,7 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
       amount3
     )
 
-  def unapply(_item: SettleRequest): _root_.scala.Option[scala.Product7[Long, Long, Int, Long, Int, Long, Int]] = _root_.scala.Some(_item)
+  def unapply(_item: SettleRequest): _root_.scala.Option[scala.Product8[Long, Int, Long, Int, Long, Int, Long, Int]] = _root_.scala.Some(_item)
 
 
   @inline private def readGameIdValue(_iprot: TProtocol): Long = {
@@ -490,6 +540,20 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
 
   @inline private def writeGameIdValue(gameId_item: Long, _oprot: TProtocol): Unit = {
     _oprot.writeI64(gameId_item)
+  }
+
+  @inline private def readDeviceTypeValue(_iprot: TProtocol): Int = {
+    _iprot.readI32()
+  }
+
+  @inline private def writeDeviceTypeField(deviceType_item: Int, _oprot: TProtocol): Unit = {
+    _oprot.writeFieldBegin(DeviceTypeField)
+    writeDeviceTypeValue(deviceType_item, _oprot)
+    _oprot.writeFieldEnd()
+  }
+
+  @inline private def writeDeviceTypeValue(deviceType_item: Int, _oprot: TProtocol): Unit = {
+    _oprot.writeI32(deviceType_item)
   }
 
   @inline private def readMemberId1Value(_iprot: TProtocol): Long = {
@@ -590,6 +654,7 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
    */
   class Immutable(
       val gameId: Long,
+      val deviceType: Int,
       val memberId1: Long,
       val amount1: Int,
       val memberId2: Long,
@@ -600,6 +665,7 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
     extends SettleRequest {
     def this(
       gameId: Long = 0L,
+      deviceType: Int = 0,
       memberId1: Long = 0L,
       amount1: Int = 0,
       memberId2: Long = 0L,
@@ -608,6 +674,7 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
       amount3: Int = 0
     ) = this(
       gameId,
+      deviceType,
       memberId1,
       amount1,
       memberId2,
@@ -628,6 +695,7 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
       _start_offset: Int,
       _end_offset: Int,
       val gameId: Long,
+      val deviceType: Int,
       val memberId1: Long,
       val amount1: Int,
       val memberId2: Long,
@@ -667,6 +735,7 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
   trait Proxy extends SettleRequest {
     protected def _underlying_SettleRequest: SettleRequest
     override def gameId: Long = _underlying_SettleRequest.gameId
+    override def deviceType: Int = _underlying_SettleRequest.deviceType
     override def memberId1: Long = _underlying_SettleRequest.memberId1
     override def amount1: Int = _underlying_SettleRequest.amount1
     override def memberId2: Long = _underlying_SettleRequest.memberId2
@@ -679,12 +748,13 @@ object SettleRequest extends ThriftStructCodec3[SettleRequest] {
 
 trait SettleRequest
   extends ThriftStruct
-  with scala.Product7[Long, Long, Int, Long, Int, Long, Int]
+  with scala.Product8[Long, Int, Long, Int, Long, Int, Long, Int]
   with java.io.Serializable
 {
   import SettleRequest._
 
   def gameId: Long
+  def deviceType: Int
   def memberId1: Long
   def amount1: Int
   def memberId2: Long
@@ -695,12 +765,13 @@ trait SettleRequest
   def _passthroughFields: immutable$Map[Short, TFieldBlob] = immutable$Map.empty
 
   def _1 = gameId
-  def _2 = memberId1
-  def _3 = amount1
-  def _4 = memberId2
-  def _5 = amount2
-  def _6 = memberId3
-  def _7 = amount3
+  def _2 = deviceType
+  def _3 = memberId1
+  def _4 = amount1
+  def _5 = memberId2
+  def _6 = amount2
+  def _7 = memberId3
+  def _8 = amount3
 
 
   /**
@@ -725,40 +796,47 @@ trait SettleRequest
               }
             case 2 =>
               if (true) {
+                writeDeviceTypeValue(deviceType, _oprot)
+                _root_.scala.Some(SettleRequest.DeviceTypeField)
+              } else {
+                _root_.scala.None
+              }
+            case 3 =>
+              if (true) {
                 writeMemberId1Value(memberId1, _oprot)
                 _root_.scala.Some(SettleRequest.MemberId1Field)
               } else {
                 _root_.scala.None
               }
-            case 3 =>
+            case 4 =>
               if (true) {
                 writeAmount1Value(amount1, _oprot)
                 _root_.scala.Some(SettleRequest.Amount1Field)
               } else {
                 _root_.scala.None
               }
-            case 4 =>
+            case 5 =>
               if (true) {
                 writeMemberId2Value(memberId2, _oprot)
                 _root_.scala.Some(SettleRequest.MemberId2Field)
               } else {
                 _root_.scala.None
               }
-            case 5 =>
+            case 6 =>
               if (true) {
                 writeAmount2Value(amount2, _oprot)
                 _root_.scala.Some(SettleRequest.Amount2Field)
               } else {
                 _root_.scala.None
               }
-            case 6 =>
+            case 7 =>
               if (true) {
                 writeMemberId3Value(memberId3, _oprot)
                 _root_.scala.Some(SettleRequest.MemberId3Field)
               } else {
                 _root_.scala.None
               }
-            case 7 =>
+            case 8 =>
               if (true) {
                 writeAmount3Value(amount3, _oprot)
                 _root_.scala.Some(SettleRequest.Amount3Field)
@@ -792,6 +870,7 @@ trait SettleRequest
    */
   def setField(_blob: TFieldBlob): SettleRequest = {
     var gameId: Long = this.gameId
+    var deviceType: Int = this.deviceType
     var memberId1: Long = this.memberId1
     var amount1: Int = this.amount1
     var memberId2: Long = this.memberId2
@@ -803,21 +882,24 @@ trait SettleRequest
       case 1 =>
         gameId = readGameIdValue(_blob.read)
       case 2 =>
-        memberId1 = readMemberId1Value(_blob.read)
+        deviceType = readDeviceTypeValue(_blob.read)
       case 3 =>
-        amount1 = readAmount1Value(_blob.read)
+        memberId1 = readMemberId1Value(_blob.read)
       case 4 =>
-        memberId2 = readMemberId2Value(_blob.read)
+        amount1 = readAmount1Value(_blob.read)
       case 5 =>
-        amount2 = readAmount2Value(_blob.read)
+        memberId2 = readMemberId2Value(_blob.read)
       case 6 =>
-        memberId3 = readMemberId3Value(_blob.read)
+        amount2 = readAmount2Value(_blob.read)
       case 7 =>
+        memberId3 = readMemberId3Value(_blob.read)
+      case 8 =>
         amount3 = readAmount3Value(_blob.read)
       case _ => _passthroughFields += (_blob.id -> _blob)
     }
     new Immutable(
       gameId,
+      deviceType,
       memberId1,
       amount1,
       memberId2,
@@ -835,6 +917,7 @@ trait SettleRequest
    */
   def unsetField(_fieldId: Short): SettleRequest = {
     var gameId: Long = this.gameId
+    var deviceType: Int = this.deviceType
     var memberId1: Long = this.memberId1
     var amount1: Int = this.amount1
     var memberId2: Long = this.memberId2
@@ -846,21 +929,24 @@ trait SettleRequest
       case 1 =>
         gameId = 0L
       case 2 =>
-        memberId1 = 0L
+        deviceType = 0
       case 3 =>
-        amount1 = 0
+        memberId1 = 0L
       case 4 =>
-        memberId2 = 0L
+        amount1 = 0
       case 5 =>
-        amount2 = 0
+        memberId2 = 0L
       case 6 =>
-        memberId3 = 0L
+        amount2 = 0
       case 7 =>
+        memberId3 = 0L
+      case 8 =>
         amount3 = 0
       case _ =>
     }
     new Immutable(
       gameId,
+      deviceType,
       memberId1,
       amount1,
       memberId2,
@@ -878,23 +964,26 @@ trait SettleRequest
    */
   def unsetGameId: SettleRequest = unsetField(1)
 
-  def unsetMemberId1: SettleRequest = unsetField(2)
+  def unsetDeviceType: SettleRequest = unsetField(2)
 
-  def unsetAmount1: SettleRequest = unsetField(3)
+  def unsetMemberId1: SettleRequest = unsetField(3)
 
-  def unsetMemberId2: SettleRequest = unsetField(4)
+  def unsetAmount1: SettleRequest = unsetField(4)
 
-  def unsetAmount2: SettleRequest = unsetField(5)
+  def unsetMemberId2: SettleRequest = unsetField(5)
 
-  def unsetMemberId3: SettleRequest = unsetField(6)
+  def unsetAmount2: SettleRequest = unsetField(6)
 
-  def unsetAmount3: SettleRequest = unsetField(7)
+  def unsetMemberId3: SettleRequest = unsetField(7)
+
+  def unsetAmount3: SettleRequest = unsetField(8)
 
 
   override def write(_oprot: TProtocol): Unit = {
     SettleRequest.validate(this)
     _oprot.writeStructBegin(Struct)
     writeGameIdField(gameId, _oprot)
+    writeDeviceTypeField(deviceType, _oprot)
     writeMemberId1Field(memberId1, _oprot)
     writeAmount1Field(amount1, _oprot)
     writeMemberId2Field(memberId2, _oprot)
@@ -910,6 +999,7 @@ trait SettleRequest
 
   def copy(
     gameId: Long = this.gameId,
+    deviceType: Int = this.deviceType,
     memberId1: Long = this.memberId1,
     amount1: Int = this.amount1,
     memberId2: Long = this.memberId2,
@@ -920,6 +1010,7 @@ trait SettleRequest
   ): SettleRequest =
     new Immutable(
       gameId,
+      deviceType,
       memberId1,
       amount1,
       memberId2,
@@ -941,16 +1032,17 @@ trait SettleRequest
   override def toString: String = _root_.scala.runtime.ScalaRunTime._toString(this)
 
 
-  override def productArity: Int = 7
+  override def productArity: Int = 8
 
   override def productElement(n: Int): Any = n match {
     case 0 => this.gameId
-    case 1 => this.memberId1
-    case 2 => this.amount1
-    case 3 => this.memberId2
-    case 4 => this.amount2
-    case 5 => this.memberId3
-    case 6 => this.amount3
+    case 1 => this.deviceType
+    case 2 => this.memberId1
+    case 3 => this.amount1
+    case 4 => this.memberId2
+    case 5 => this.amount2
+    case 6 => this.memberId3
+    case 7 => this.amount3
     case _ => throw new IndexOutOfBoundsException(n.toString)
   }
 

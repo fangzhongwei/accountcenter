@@ -21,7 +21,7 @@ trait AccountRepository extends Tables {
     TmDiamondAccountAutoInc += tmDiamondAccountRow
   }
 
-  def getPriceList(): Seq[TmDiamodPriceRow] = {
+  def getPriceList(deviceType:Int): Seq[TmDiamodPriceRow] = {
     Await.result(db.run {
       TmDiamodPrice.sortBy(_.price).filter(_.status === true).result
     }, Duration.Inf)
@@ -50,13 +50,13 @@ trait AccountRepository extends Tables {
     }, Duration.Inf)
   }
 
-  def getAccount(memberId: Long): Option[TmDiamondAccountRow] = {
+  def getAccount(memberId: Long, deviceType:Int): Option[TmDiamondAccountRow] = {
     Await.result(db.run {
       TmDiamondAccount.filter(_.memberId === memberId).result.headOption
     }, Duration.Inf)
   }
 
-  def getChannelList(): Seq[TmChannelRow] = {
+  def getChannelList(deviceType:Int): Seq[TmChannelRow] = {
     Await.result(db.run {
       TmChannel.sortBy(_.priority desc).filter(_.status === true).result
     }, Duration.Inf)
@@ -70,12 +70,9 @@ trait AccountRepository extends Tables {
     Await.result(db.run(tran), Duration.Inf)
   }
 
-  var index = -1
 
   def nextOrderId(): Long = {
-    index = index + 1
-    val sequenceName = "voucher_" + index % 5
-    Await.result(db.run(sql"""select nextval($sequenceName)""".as[(Long)]), Duration.Inf).head
+    Await.result(db.run(sql"""select nextval('seq_order_id')""".as[(Long)]), Duration.Inf).head
   }
 
   def getPaymentOrder(paymentOrderNo: String): Option[TPaymentOrderRow] = {
@@ -84,11 +81,11 @@ trait AccountRepository extends Tables {
     }, Duration.Inf)
   }
 
-  def depositSuccess(memberId: Long, accountOrderNo: String, paymentOrderNo: String, diamondAmount: Int) = {
+  def depositSuccess(accountId: Long, accountOrderNo: String, paymentOrderNo: String, diamondAmount: Int) = {
     val tran = (for {
       _ <- TAccountOrder.filter(_.paymentVoucherNo === paymentOrderNo).map(_.tradeStatus).update(99)
       _ <- TPaymentOrder.filter(_.accountOrderNo === accountOrderNo).map(_.payStatus).update(99)
-      _ <- sql"""UPDATE tm_diamond_account SET diamond_amount = diamond_amount + $diamondAmount WHERE member_id = $memberId""".as[Int]
+      _ <- sql"""UPDATE tm_diamond_account SET diamond_amount = diamond_amount + $diamondAmount WHERE account_id = $accountId""".as[Int]
     } yield ()).transactionally
     Await.result(db.run(tran), Duration.Inf)
   }

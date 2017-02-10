@@ -19,7 +19,7 @@ lazy val accountcommonlib = (project in file("accountcommonlib")).settings(commo
 lazy val accountserver = (project in file("accountserver")).settings(commonSettings: _*).settings(
   name := """accountserver""",
   libraryDependencies ++= Seq(
-    "com.jxjxgo.common" % "common-mysql_2.11" % "1.0",
+    "com.jxjxgo.common" % "common-db_2.11" % "1.0",
     "com.jxjxgo.common" % "common-error_2.11" % "1.0",
     "com.jxjxgo.common" % "common-utils_2.11" % "1.0",
     "com.jxjxgo.account" % "accountcommonlib_2.11" % "1.0"

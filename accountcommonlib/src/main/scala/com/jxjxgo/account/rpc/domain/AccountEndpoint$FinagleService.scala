@@ -143,7 +143,7 @@ class AccountEndpoint$FinagleService(
       val args = CreateAccount.Args.decode(iprot)
       iprot.readMessageEnd()
       (try {
-        iface.createAccount(args.traceId, args.memberId)
+        iface.createAccount(args.traceId, args.memberId, args.deviceType)
       } catch {
         case e: Exception => Future.exception(e)
       }).flatMap { value: com.jxjxgo.account.rpc.domain.AccountBaseResponse =>
@@ -177,7 +177,7 @@ class AccountEndpoint$FinagleService(
       val args = GetAccount.Args.decode(iprot)
       iprot.readMessageEnd()
       (try {
-        iface.getAccount(args.traceId, args.memberId)
+        iface.getAccount(args.traceId, args.memberId, args.deviceType)
       } catch {
         case e: Exception => Future.exception(e)
       }).flatMap { value: com.jxjxgo.account.rpc.domain.DiamondAccountResponse =>
@@ -211,7 +211,7 @@ class AccountEndpoint$FinagleService(
       val args = GetPriceList.Args.decode(iprot)
       iprot.readMessageEnd()
       (try {
-        iface.getPriceList(args.traceId)
+        iface.getPriceList(args.traceId, args.deviceType)
       } catch {
         case e: Exception => Future.exception(e)
       }).flatMap { value: com.jxjxgo.account.rpc.domain.PriceListResponse =>
@@ -245,7 +245,7 @@ class AccountEndpoint$FinagleService(
       val args = GetChannelList.Args.decode(iprot)
       iprot.readMessageEnd()
       (try {
-        iface.getChannelList(args.traceId)
+        iface.getChannelList(args.traceId, args.deviceType)
       } catch {
         case e: Exception => Future.exception(e)
       }).flatMap { value: com.jxjxgo.account.rpc.domain.ChannelListResponse =>

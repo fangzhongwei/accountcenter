@@ -27,23 +27,25 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
   val Struct = new TStruct("DepositRequest")
   val MemberIdField = new TField("memberId", TType.I64, 1)
   val MemberIdFieldManifest = implicitly[Manifest[Long]]
-  val PriceCodeField = new TField("priceCode", TType.STRING, 2)
+  val DeviceTypeField = new TField("deviceType", TType.I32, 2)
+  val DeviceTypeFieldManifest = implicitly[Manifest[Int]]
+  val PriceCodeField = new TField("priceCode", TType.STRING, 3)
   val PriceCodeFieldManifest = implicitly[Manifest[String]]
-  val ChannelCodeField = new TField("channelCode", TType.STRING, 3)
+  val ChannelCodeField = new TField("channelCode", TType.STRING, 4)
   val ChannelCodeFieldManifest = implicitly[Manifest[String]]
-  val PriceField = new TField("price", TType.STRING, 4)
+  val PriceField = new TField("price", TType.STRING, 5)
   val PriceFieldManifest = implicitly[Manifest[String]]
-  val DiamondAmountField = new TField("diamondAmount", TType.I32, 5)
+  val DiamondAmountField = new TField("diamondAmount", TType.I32, 6)
   val DiamondAmountFieldManifest = implicitly[Manifest[Int]]
-  val Ext1Field = new TField("ext1", TType.STRING, 6)
+  val Ext1Field = new TField("ext1", TType.STRING, 7)
   val Ext1FieldManifest = implicitly[Manifest[String]]
-  val Ext2Field = new TField("ext2", TType.STRING, 7)
+  val Ext2Field = new TField("ext2", TType.STRING, 8)
   val Ext2FieldManifest = implicitly[Manifest[String]]
-  val Ext3Field = new TField("ext3", TType.STRING, 8)
+  val Ext3Field = new TField("ext3", TType.STRING, 9)
   val Ext3FieldManifest = implicitly[Manifest[String]]
-  val Ext4Field = new TField("ext4", TType.STRING, 9)
+  val Ext4Field = new TField("ext4", TType.STRING, 10)
   val Ext4FieldManifest = implicitly[Manifest[String]]
-  val Ext5Field = new TField("ext5", TType.STRING, 10)
+  val Ext5Field = new TField("ext5", TType.STRING, 11)
   val Ext5FieldManifest = implicitly[Manifest[String]]
 
   /**
@@ -55,6 +57,16 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
       false,
       false,
       MemberIdFieldManifest,
+      _root_.scala.None,
+      _root_.scala.None,
+      immutable$Map.empty[String, String],
+      immutable$Map.empty[String, String]
+    ),
+    new ThriftStructFieldInfo(
+      DeviceTypeField,
+      false,
+      false,
+      DeviceTypeFieldManifest,
       _root_.scala.None,
       _root_.scala.None,
       immutable$Map.empty[String, String],
@@ -168,6 +180,11 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
           val field = original.memberId
           field
         },
+      deviceType =
+        {
+          val field = original.deviceType
+          field
+        },
       priceCode =
         {
           val field = original.priceCode
@@ -222,6 +239,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
   private[this] def lazyDecode(_iprot: LazyTProtocol): DepositRequest = {
 
     var memberId: Long = 0L
+    var deviceType: Int = 0
     var priceCodeOffset: Int = -1
     var channelCodeOffset: Int = -1
     var priceOffset: Int = -1
@@ -259,6 +277,20 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
             }
           case 2 =>
             _field.`type` match {
+              case TType.I32 =>
+    
+                deviceType = readDeviceTypeValue(_iprot)
+              case _actualType =>
+                val _expectedType = TType.I32
+                throw new TProtocolException(
+                  "Received wrong type for field 'deviceType' (expected=%s, actual=%s).".format(
+                    ttypeToString(_expectedType),
+                    ttypeToString(_actualType)
+                  )
+                )
+            }
+          case 3 =>
+            _field.`type` match {
               case TType.STRING =>
                 priceCodeOffset = _iprot.offsetSkipString
     
@@ -271,7 +303,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
                   )
                 )
             }
-          case 3 =>
+          case 4 =>
             _field.`type` match {
               case TType.STRING =>
                 channelCodeOffset = _iprot.offsetSkipString
@@ -285,7 +317,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
                   )
                 )
             }
-          case 4 =>
+          case 5 =>
             _field.`type` match {
               case TType.STRING =>
                 priceOffset = _iprot.offsetSkipString
@@ -299,7 +331,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
                   )
                 )
             }
-          case 5 =>
+          case 6 =>
             _field.`type` match {
               case TType.I32 =>
     
@@ -313,7 +345,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
                   )
                 )
             }
-          case 6 =>
+          case 7 =>
             _field.`type` match {
               case TType.STRING =>
                 ext1Offset = _iprot.offsetSkipString
@@ -327,7 +359,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
                   )
                 )
             }
-          case 7 =>
+          case 8 =>
             _field.`type` match {
               case TType.STRING =>
                 ext2Offset = _iprot.offsetSkipString
@@ -341,7 +373,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
                   )
                 )
             }
-          case 8 =>
+          case 9 =>
             _field.`type` match {
               case TType.STRING =>
                 ext3Offset = _iprot.offsetSkipString
@@ -355,7 +387,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
                   )
                 )
             }
-          case 9 =>
+          case 10 =>
             _field.`type` match {
               case TType.STRING =>
                 ext4Offset = _iprot.offsetSkipString
@@ -369,7 +401,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
                   )
                 )
             }
-          case 10 =>
+          case 11 =>
             _field.`type` match {
               case TType.STRING =>
                 ext5Offset = _iprot.offsetSkipString
@@ -399,6 +431,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
       _start_offset,
       _iprot.offset,
       memberId,
+      deviceType,
       priceCodeOffset,
       channelCodeOffset,
       priceOffset,
@@ -423,6 +456,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
 
   private[this] def eagerDecode(_iprot: TProtocol): DepositRequest = {
     var memberId: Long = 0L
+    var deviceType: Int = 0
     var priceCode: String = ""
     var channelCode: String = ""
     var price: String = ""
@@ -457,6 +491,19 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
             }
           case 2 =>
             _field.`type` match {
+              case TType.I32 =>
+                deviceType = readDeviceTypeValue(_iprot)
+              case _actualType =>
+                val _expectedType = TType.I32
+                throw new TProtocolException(
+                  "Received wrong type for field 'deviceType' (expected=%s, actual=%s).".format(
+                    ttypeToString(_expectedType),
+                    ttypeToString(_actualType)
+                  )
+                )
+            }
+          case 3 =>
+            _field.`type` match {
               case TType.STRING =>
                 priceCode = readPriceCodeValue(_iprot)
               case _actualType =>
@@ -468,7 +515,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
                   )
                 )
             }
-          case 3 =>
+          case 4 =>
             _field.`type` match {
               case TType.STRING =>
                 channelCode = readChannelCodeValue(_iprot)
@@ -481,7 +528,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
                   )
                 )
             }
-          case 4 =>
+          case 5 =>
             _field.`type` match {
               case TType.STRING =>
                 price = readPriceValue(_iprot)
@@ -494,7 +541,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
                   )
                 )
             }
-          case 5 =>
+          case 6 =>
             _field.`type` match {
               case TType.I32 =>
                 diamondAmount = readDiamondAmountValue(_iprot)
@@ -507,7 +554,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
                   )
                 )
             }
-          case 6 =>
+          case 7 =>
             _field.`type` match {
               case TType.STRING =>
                 ext1 = readExt1Value(_iprot)
@@ -520,7 +567,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
                   )
                 )
             }
-          case 7 =>
+          case 8 =>
             _field.`type` match {
               case TType.STRING =>
                 ext2 = readExt2Value(_iprot)
@@ -533,7 +580,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
                   )
                 )
             }
-          case 8 =>
+          case 9 =>
             _field.`type` match {
               case TType.STRING =>
                 ext3 = readExt3Value(_iprot)
@@ -546,7 +593,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
                   )
                 )
             }
-          case 9 =>
+          case 10 =>
             _field.`type` match {
               case TType.STRING =>
                 ext4 = readExt4Value(_iprot)
@@ -559,7 +606,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
                   )
                 )
             }
-          case 10 =>
+          case 11 =>
             _field.`type` match {
               case TType.STRING =>
                 ext5 = readExt5Value(_iprot)
@@ -584,6 +631,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
 
     new Immutable(
       memberId,
+      deviceType,
       priceCode,
       channelCode,
       price,
@@ -602,6 +650,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
 
   def apply(
     memberId: Long = 0L,
+    deviceType: Int = 0,
     priceCode: String = "",
     channelCode: String = "",
     price: String = "",
@@ -614,6 +663,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
   ): DepositRequest =
     new Immutable(
       memberId,
+      deviceType,
       priceCode,
       channelCode,
       price,
@@ -625,7 +675,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
       ext5
     )
 
-  def unapply(_item: DepositRequest): _root_.scala.Option[scala.Product10[Long, String, String, String, Int, String, String, String, String, String]] = _root_.scala.Some(_item)
+  def unapply(_item: DepositRequest): _root_.scala.Option[scala.Product11[Long, Int, String, String, String, Int, String, String, String, String, String]] = _root_.scala.Some(_item)
 
 
   @inline private def readMemberIdValue(_iprot: TProtocol): Long = {
@@ -640,6 +690,20 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
 
   @inline private def writeMemberIdValue(memberId_item: Long, _oprot: TProtocol): Unit = {
     _oprot.writeI64(memberId_item)
+  }
+
+  @inline private def readDeviceTypeValue(_iprot: TProtocol): Int = {
+    _iprot.readI32()
+  }
+
+  @inline private def writeDeviceTypeField(deviceType_item: Int, _oprot: TProtocol): Unit = {
+    _oprot.writeFieldBegin(DeviceTypeField)
+    writeDeviceTypeValue(deviceType_item, _oprot)
+    _oprot.writeFieldEnd()
+  }
+
+  @inline private def writeDeviceTypeValue(deviceType_item: Int, _oprot: TProtocol): Unit = {
+    _oprot.writeI32(deviceType_item)
   }
 
   @inline private def readPriceCodeValue(_iprot: TProtocol): String = {
@@ -782,6 +846,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
    */
   class Immutable(
       val memberId: Long,
+      val deviceType: Int,
       val priceCode: String,
       val channelCode: String,
       val price: String,
@@ -795,6 +860,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
     extends DepositRequest {
     def this(
       memberId: Long = 0L,
+      deviceType: Int = 0,
       priceCode: String = "",
       channelCode: String = "",
       price: String = "",
@@ -806,6 +872,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
       ext5: String = ""
     ) = this(
       memberId,
+      deviceType,
       priceCode,
       channelCode,
       price,
@@ -829,6 +896,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
       _start_offset: Int,
       _end_offset: Int,
       val memberId: Long,
+      val deviceType: Int,
       priceCodeOffset: Int,
       channelCodeOffset: Int,
       priceOffset: Int,
@@ -919,6 +987,7 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
   trait Proxy extends DepositRequest {
     protected def _underlying_DepositRequest: DepositRequest
     override def memberId: Long = _underlying_DepositRequest.memberId
+    override def deviceType: Int = _underlying_DepositRequest.deviceType
     override def priceCode: String = _underlying_DepositRequest.priceCode
     override def channelCode: String = _underlying_DepositRequest.channelCode
     override def price: String = _underlying_DepositRequest.price
@@ -934,12 +1003,13 @@ object DepositRequest extends ThriftStructCodec3[DepositRequest] {
 
 trait DepositRequest
   extends ThriftStruct
-  with scala.Product10[Long, String, String, String, Int, String, String, String, String, String]
+  with scala.Product11[Long, Int, String, String, String, Int, String, String, String, String, String]
   with java.io.Serializable
 {
   import DepositRequest._
 
   def memberId: Long
+  def deviceType: Int
   def priceCode: String
   def channelCode: String
   def price: String
@@ -953,15 +1023,16 @@ trait DepositRequest
   def _passthroughFields: immutable$Map[Short, TFieldBlob] = immutable$Map.empty
 
   def _1 = memberId
-  def _2 = priceCode
-  def _3 = channelCode
-  def _4 = price
-  def _5 = diamondAmount
-  def _6 = ext1
-  def _7 = ext2
-  def _8 = ext3
-  def _9 = ext4
-  def _10 = ext5
+  def _2 = deviceType
+  def _3 = priceCode
+  def _4 = channelCode
+  def _5 = price
+  def _6 = diamondAmount
+  def _7 = ext1
+  def _8 = ext2
+  def _9 = ext3
+  def _10 = ext4
+  def _11 = ext5
 
 
   /**
@@ -985,62 +1056,69 @@ trait DepositRequest
                 _root_.scala.None
               }
             case 2 =>
+              if (true) {
+                writeDeviceTypeValue(deviceType, _oprot)
+                _root_.scala.Some(DepositRequest.DeviceTypeField)
+              } else {
+                _root_.scala.None
+              }
+            case 3 =>
               if (priceCode ne null) {
                 writePriceCodeValue(priceCode, _oprot)
                 _root_.scala.Some(DepositRequest.PriceCodeField)
               } else {
                 _root_.scala.None
               }
-            case 3 =>
+            case 4 =>
               if (channelCode ne null) {
                 writeChannelCodeValue(channelCode, _oprot)
                 _root_.scala.Some(DepositRequest.ChannelCodeField)
               } else {
                 _root_.scala.None
               }
-            case 4 =>
+            case 5 =>
               if (price ne null) {
                 writePriceValue(price, _oprot)
                 _root_.scala.Some(DepositRequest.PriceField)
               } else {
                 _root_.scala.None
               }
-            case 5 =>
+            case 6 =>
               if (true) {
                 writeDiamondAmountValue(diamondAmount, _oprot)
                 _root_.scala.Some(DepositRequest.DiamondAmountField)
               } else {
                 _root_.scala.None
               }
-            case 6 =>
+            case 7 =>
               if (ext1 ne null) {
                 writeExt1Value(ext1, _oprot)
                 _root_.scala.Some(DepositRequest.Ext1Field)
               } else {
                 _root_.scala.None
               }
-            case 7 =>
+            case 8 =>
               if (ext2 ne null) {
                 writeExt2Value(ext2, _oprot)
                 _root_.scala.Some(DepositRequest.Ext2Field)
               } else {
                 _root_.scala.None
               }
-            case 8 =>
+            case 9 =>
               if (ext3 ne null) {
                 writeExt3Value(ext3, _oprot)
                 _root_.scala.Some(DepositRequest.Ext3Field)
               } else {
                 _root_.scala.None
               }
-            case 9 =>
+            case 10 =>
               if (ext4 ne null) {
                 writeExt4Value(ext4, _oprot)
                 _root_.scala.Some(DepositRequest.Ext4Field)
               } else {
                 _root_.scala.None
               }
-            case 10 =>
+            case 11 =>
               if (ext5 ne null) {
                 writeExt5Value(ext5, _oprot)
                 _root_.scala.Some(DepositRequest.Ext5Field)
@@ -1074,6 +1152,7 @@ trait DepositRequest
    */
   def setField(_blob: TFieldBlob): DepositRequest = {
     var memberId: Long = this.memberId
+    var deviceType: Int = this.deviceType
     var priceCode: String = this.priceCode
     var channelCode: String = this.channelCode
     var price: String = this.price
@@ -1088,27 +1167,30 @@ trait DepositRequest
       case 1 =>
         memberId = readMemberIdValue(_blob.read)
       case 2 =>
-        priceCode = readPriceCodeValue(_blob.read)
+        deviceType = readDeviceTypeValue(_blob.read)
       case 3 =>
-        channelCode = readChannelCodeValue(_blob.read)
+        priceCode = readPriceCodeValue(_blob.read)
       case 4 =>
-        price = readPriceValue(_blob.read)
+        channelCode = readChannelCodeValue(_blob.read)
       case 5 =>
-        diamondAmount = readDiamondAmountValue(_blob.read)
+        price = readPriceValue(_blob.read)
       case 6 =>
-        ext1 = readExt1Value(_blob.read)
+        diamondAmount = readDiamondAmountValue(_blob.read)
       case 7 =>
-        ext2 = readExt2Value(_blob.read)
+        ext1 = readExt1Value(_blob.read)
       case 8 =>
-        ext3 = readExt3Value(_blob.read)
+        ext2 = readExt2Value(_blob.read)
       case 9 =>
-        ext4 = readExt4Value(_blob.read)
+        ext3 = readExt3Value(_blob.read)
       case 10 =>
+        ext4 = readExt4Value(_blob.read)
+      case 11 =>
         ext5 = readExt5Value(_blob.read)
       case _ => _passthroughFields += (_blob.id -> _blob)
     }
     new Immutable(
       memberId,
+      deviceType,
       priceCode,
       channelCode,
       price,
@@ -1129,6 +1211,7 @@ trait DepositRequest
    */
   def unsetField(_fieldId: Short): DepositRequest = {
     var memberId: Long = this.memberId
+    var deviceType: Int = this.deviceType
     var priceCode: String = this.priceCode
     var channelCode: String = this.channelCode
     var price: String = this.price
@@ -1143,27 +1226,30 @@ trait DepositRequest
       case 1 =>
         memberId = 0L
       case 2 =>
-        priceCode = ""
+        deviceType = 0
       case 3 =>
-        channelCode = ""
+        priceCode = ""
       case 4 =>
-        price = ""
+        channelCode = ""
       case 5 =>
-        diamondAmount = 0
+        price = ""
       case 6 =>
-        ext1 = ""
+        diamondAmount = 0
       case 7 =>
-        ext2 = ""
+        ext1 = ""
       case 8 =>
-        ext3 = ""
+        ext2 = ""
       case 9 =>
-        ext4 = ""
+        ext3 = ""
       case 10 =>
+        ext4 = ""
+      case 11 =>
         ext5 = ""
       case _ =>
     }
     new Immutable(
       memberId,
+      deviceType,
       priceCode,
       channelCode,
       price,
@@ -1184,29 +1270,32 @@ trait DepositRequest
    */
   def unsetMemberId: DepositRequest = unsetField(1)
 
-  def unsetPriceCode: DepositRequest = unsetField(2)
+  def unsetDeviceType: DepositRequest = unsetField(2)
 
-  def unsetChannelCode: DepositRequest = unsetField(3)
+  def unsetPriceCode: DepositRequest = unsetField(3)
 
-  def unsetPrice: DepositRequest = unsetField(4)
+  def unsetChannelCode: DepositRequest = unsetField(4)
 
-  def unsetDiamondAmount: DepositRequest = unsetField(5)
+  def unsetPrice: DepositRequest = unsetField(5)
 
-  def unsetExt1: DepositRequest = unsetField(6)
+  def unsetDiamondAmount: DepositRequest = unsetField(6)
 
-  def unsetExt2: DepositRequest = unsetField(7)
+  def unsetExt1: DepositRequest = unsetField(7)
 
-  def unsetExt3: DepositRequest = unsetField(8)
+  def unsetExt2: DepositRequest = unsetField(8)
 
-  def unsetExt4: DepositRequest = unsetField(9)
+  def unsetExt3: DepositRequest = unsetField(9)
 
-  def unsetExt5: DepositRequest = unsetField(10)
+  def unsetExt4: DepositRequest = unsetField(10)
+
+  def unsetExt5: DepositRequest = unsetField(11)
 
 
   override def write(_oprot: TProtocol): Unit = {
     DepositRequest.validate(this)
     _oprot.writeStructBegin(Struct)
     writeMemberIdField(memberId, _oprot)
+    writeDeviceTypeField(deviceType, _oprot)
     if (priceCode ne null) writePriceCodeField(priceCode, _oprot)
     if (channelCode ne null) writeChannelCodeField(channelCode, _oprot)
     if (price ne null) writePriceField(price, _oprot)
@@ -1225,6 +1314,7 @@ trait DepositRequest
 
   def copy(
     memberId: Long = this.memberId,
+    deviceType: Int = this.deviceType,
     priceCode: String = this.priceCode,
     channelCode: String = this.channelCode,
     price: String = this.price,
@@ -1238,6 +1328,7 @@ trait DepositRequest
   ): DepositRequest =
     new Immutable(
       memberId,
+      deviceType,
       priceCode,
       channelCode,
       price,
@@ -1262,19 +1353,20 @@ trait DepositRequest
   override def toString: String = _root_.scala.runtime.ScalaRunTime._toString(this)
 
 
-  override def productArity: Int = 10
+  override def productArity: Int = 11
 
   override def productElement(n: Int): Any = n match {
     case 0 => this.memberId
-    case 1 => this.priceCode
-    case 2 => this.channelCode
-    case 3 => this.price
-    case 4 => this.diamondAmount
-    case 5 => this.ext1
-    case 6 => this.ext2
-    case 7 => this.ext3
-    case 8 => this.ext4
-    case 9 => this.ext5
+    case 1 => this.deviceType
+    case 2 => this.priceCode
+    case 3 => this.channelCode
+    case 4 => this.price
+    case 5 => this.diamondAmount
+    case 6 => this.ext1
+    case 7 => this.ext2
+    case 8 => this.ext3
+    case 9 => this.ext4
+    case 10 => this.ext5
     case _ => throw new IndexOutOfBoundsException(n.toString)
   }
 

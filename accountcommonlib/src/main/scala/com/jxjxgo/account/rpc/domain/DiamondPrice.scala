@@ -31,6 +31,8 @@ object DiamondPrice extends ThriftStructCodec3[DiamondPrice] {
   val DiamondAmountFieldManifest = implicitly[Manifest[Int]]
   val PriceField = new TField("price", TType.STRING, 3)
   val PriceFieldManifest = implicitly[Manifest[String]]
+  val DeviceTypeField = new TField("deviceType", TType.I32, 4)
+  val DeviceTypeFieldManifest = implicitly[Manifest[Int]]
 
   /**
    * Field information in declaration order.
@@ -65,6 +67,16 @@ object DiamondPrice extends ThriftStructCodec3[DiamondPrice] {
       _root_.scala.None,
       immutable$Map.empty[String, String],
       immutable$Map.empty[String, String]
+    ),
+    new ThriftStructFieldInfo(
+      DeviceTypeField,
+      false,
+      false,
+      DeviceTypeFieldManifest,
+      _root_.scala.None,
+      _root_.scala.None,
+      immutable$Map.empty[String, String],
+      immutable$Map.empty[String, String]
     )
   )
 
@@ -93,6 +105,11 @@ object DiamondPrice extends ThriftStructCodec3[DiamondPrice] {
         {
           val field = original.price
           field
+        },
+      deviceType =
+        {
+          val field = original.deviceType
+          field
         }
     )
 
@@ -105,6 +122,7 @@ object DiamondPrice extends ThriftStructCodec3[DiamondPrice] {
     var codeOffset: Int = -1
     var diamondAmount: Int = 0
     var priceOffset: Int = -1
+    var deviceType: Int = 0
 
     var _passthroughFields: Builder[(Short, TFieldBlob), immutable$Map[Short, TFieldBlob]] = null
     var _done = false
@@ -159,6 +177,20 @@ object DiamondPrice extends ThriftStructCodec3[DiamondPrice] {
                   )
                 )
             }
+          case 4 =>
+            _field.`type` match {
+              case TType.I32 =>
+    
+                deviceType = readDeviceTypeValue(_iprot)
+              case _actualType =>
+                val _expectedType = TType.I32
+                throw new TProtocolException(
+                  "Received wrong type for field 'deviceType' (expected=%s, actual=%s).".format(
+                    ttypeToString(_expectedType),
+                    ttypeToString(_actualType)
+                  )
+                )
+            }
           case _ =>
             if (_passthroughFields == null)
               _passthroughFields = immutable$Map.newBuilder[Short, TFieldBlob]
@@ -177,6 +209,7 @@ object DiamondPrice extends ThriftStructCodec3[DiamondPrice] {
       codeOffset,
       diamondAmount,
       priceOffset,
+      deviceType,
       if (_passthroughFields == null)
         NoPassthroughFields
       else
@@ -194,6 +227,7 @@ object DiamondPrice extends ThriftStructCodec3[DiamondPrice] {
     var code: String = ""
     var diamondAmount: Int = 0
     var price: String = ""
+    var deviceType: Int = 0
     var _passthroughFields: Builder[(Short, TFieldBlob), immutable$Map[Short, TFieldBlob]] = null
     var _done = false
 
@@ -243,6 +277,19 @@ object DiamondPrice extends ThriftStructCodec3[DiamondPrice] {
                   )
                 )
             }
+          case 4 =>
+            _field.`type` match {
+              case TType.I32 =>
+                deviceType = readDeviceTypeValue(_iprot)
+              case _actualType =>
+                val _expectedType = TType.I32
+                throw new TProtocolException(
+                  "Received wrong type for field 'deviceType' (expected=%s, actual=%s).".format(
+                    ttypeToString(_expectedType),
+                    ttypeToString(_actualType)
+                  )
+                )
+            }
           case _ =>
             if (_passthroughFields == null)
               _passthroughFields = immutable$Map.newBuilder[Short, TFieldBlob]
@@ -257,6 +304,7 @@ object DiamondPrice extends ThriftStructCodec3[DiamondPrice] {
       code,
       diamondAmount,
       price,
+      deviceType,
       if (_passthroughFields == null)
         NoPassthroughFields
       else
@@ -267,15 +315,17 @@ object DiamondPrice extends ThriftStructCodec3[DiamondPrice] {
   def apply(
     code: String = "",
     diamondAmount: Int = 0,
-    price: String = ""
+    price: String = "",
+    deviceType: Int = 0
   ): DiamondPrice =
     new Immutable(
       code,
       diamondAmount,
-      price
+      price,
+      deviceType
     )
 
-  def unapply(_item: DiamondPrice): _root_.scala.Option[scala.Product3[String, Int, String]] = _root_.scala.Some(_item)
+  def unapply(_item: DiamondPrice): _root_.scala.Option[scala.Product4[String, Int, String, Int]] = _root_.scala.Some(_item)
 
 
   @inline private def readCodeValue(_iprot: TProtocol): String = {
@@ -320,6 +370,20 @@ object DiamondPrice extends ThriftStructCodec3[DiamondPrice] {
     _oprot.writeString(price_item)
   }
 
+  @inline private def readDeviceTypeValue(_iprot: TProtocol): Int = {
+    _iprot.readI32()
+  }
+
+  @inline private def writeDeviceTypeField(deviceType_item: Int, _oprot: TProtocol): Unit = {
+    _oprot.writeFieldBegin(DeviceTypeField)
+    writeDeviceTypeValue(deviceType_item, _oprot)
+    _oprot.writeFieldEnd()
+  }
+
+  @inline private def writeDeviceTypeValue(deviceType_item: Int, _oprot: TProtocol): Unit = {
+    _oprot.writeI32(deviceType_item)
+  }
+
 
   object Immutable extends ThriftStructCodec3[DiamondPrice] {
     override def encode(_item: DiamondPrice, _oproto: TProtocol): Unit = { _item.write(_oproto) }
@@ -336,16 +400,19 @@ object DiamondPrice extends ThriftStructCodec3[DiamondPrice] {
       val code: String,
       val diamondAmount: Int,
       val price: String,
+      val deviceType: Int,
       override val _passthroughFields: immutable$Map[Short, TFieldBlob])
     extends DiamondPrice {
     def this(
       code: String = "",
       diamondAmount: Int = 0,
-      price: String = ""
+      price: String = "",
+      deviceType: Int = 0
     ) = this(
       code,
       diamondAmount,
       price,
+      deviceType,
       Map.empty
     )
   }
@@ -362,6 +429,7 @@ object DiamondPrice extends ThriftStructCodec3[DiamondPrice] {
       codeOffset: Int,
       val diamondAmount: Int,
       priceOffset: Int,
+      val deviceType: Int,
       override val _passthroughFields: immutable$Map[Short, TFieldBlob])
     extends DiamondPrice {
 
@@ -409,13 +477,14 @@ object DiamondPrice extends ThriftStructCodec3[DiamondPrice] {
     override def code: String = _underlying_DiamondPrice.code
     override def diamondAmount: Int = _underlying_DiamondPrice.diamondAmount
     override def price: String = _underlying_DiamondPrice.price
+    override def deviceType: Int = _underlying_DiamondPrice.deviceType
     override def _passthroughFields = _underlying_DiamondPrice._passthroughFields
   }
 }
 
 trait DiamondPrice
   extends ThriftStruct
-  with scala.Product3[String, Int, String]
+  with scala.Product4[String, Int, String, Int]
   with java.io.Serializable
 {
   import DiamondPrice._
@@ -423,12 +492,14 @@ trait DiamondPrice
   def code: String
   def diamondAmount: Int
   def price: String
+  def deviceType: Int
 
   def _passthroughFields: immutable$Map[Short, TFieldBlob] = immutable$Map.empty
 
   def _1 = code
   def _2 = diamondAmount
   def _3 = price
+  def _4 = deviceType
 
 
   /**
@@ -465,6 +536,13 @@ trait DiamondPrice
               } else {
                 _root_.scala.None
               }
+            case 4 =>
+              if (true) {
+                writeDeviceTypeValue(deviceType, _oprot)
+                _root_.scala.Some(DiamondPrice.DeviceTypeField)
+              } else {
+                _root_.scala.None
+              }
             case _ => _root_.scala.None
           }
         _fieldOpt match {
@@ -494,6 +572,7 @@ trait DiamondPrice
     var code: String = this.code
     var diamondAmount: Int = this.diamondAmount
     var price: String = this.price
+    var deviceType: Int = this.deviceType
     var _passthroughFields = this._passthroughFields
     _blob.id match {
       case 1 =>
@@ -502,12 +581,15 @@ trait DiamondPrice
         diamondAmount = readDiamondAmountValue(_blob.read)
       case 3 =>
         price = readPriceValue(_blob.read)
+      case 4 =>
+        deviceType = readDeviceTypeValue(_blob.read)
       case _ => _passthroughFields += (_blob.id -> _blob)
     }
     new Immutable(
       code,
       diamondAmount,
       price,
+      deviceType,
       _passthroughFields
     )
   }
@@ -521,6 +603,7 @@ trait DiamondPrice
     var code: String = this.code
     var diamondAmount: Int = this.diamondAmount
     var price: String = this.price
+    var deviceType: Int = this.deviceType
 
     _fieldId match {
       case 1 =>
@@ -529,12 +612,15 @@ trait DiamondPrice
         diamondAmount = 0
       case 3 =>
         price = ""
+      case 4 =>
+        deviceType = 0
       case _ =>
     }
     new Immutable(
       code,
       diamondAmount,
       price,
+      deviceType,
       _passthroughFields - _fieldId
     )
   }
@@ -550,6 +636,8 @@ trait DiamondPrice
 
   def unsetPrice: DiamondPrice = unsetField(3)
 
+  def unsetDeviceType: DiamondPrice = unsetField(4)
+
 
   override def write(_oprot: TProtocol): Unit = {
     DiamondPrice.validate(this)
@@ -557,6 +645,7 @@ trait DiamondPrice
     if (code ne null) writeCodeField(code, _oprot)
     writeDiamondAmountField(diamondAmount, _oprot)
     if (price ne null) writePriceField(price, _oprot)
+    writeDeviceTypeField(deviceType, _oprot)
     if (_passthroughFields.nonEmpty) {
       _passthroughFields.values.foreach { _.write(_oprot) }
     }
@@ -568,12 +657,14 @@ trait DiamondPrice
     code: String = this.code,
     diamondAmount: Int = this.diamondAmount,
     price: String = this.price,
+    deviceType: Int = this.deviceType,
     _passthroughFields: immutable$Map[Short, TFieldBlob] = this._passthroughFields
   ): DiamondPrice =
     new Immutable(
       code,
       diamondAmount,
       price,
+      deviceType,
       _passthroughFields
     )
 
@@ -589,12 +680,13 @@ trait DiamondPrice
   override def toString: String = _root_.scala.runtime.ScalaRunTime._toString(this)
 
 
-  override def productArity: Int = 3
+  override def productArity: Int = 4
 
   override def productElement(n: Int): Any = n match {
     case 0 => this.code
     case 1 => this.diamondAmount
     case 2 => this.price
+    case 3 => this.deviceType
     case _ => throw new IndexOutOfBoundsException(n.toString)
   }
 

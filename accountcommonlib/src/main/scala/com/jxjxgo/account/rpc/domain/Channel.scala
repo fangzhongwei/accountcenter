@@ -29,6 +29,8 @@ object Channel extends ThriftStructCodec3[Channel] {
   val CodeFieldManifest = implicitly[Manifest[String]]
   val NameField = new TField("name", TType.STRING, 2)
   val NameFieldManifest = implicitly[Manifest[String]]
+  val DeviceTypeField = new TField("deviceType", TType.I32, 3)
+  val DeviceTypeFieldManifest = implicitly[Manifest[Int]]
 
   /**
    * Field information in declaration order.
@@ -49,6 +51,16 @@ object Channel extends ThriftStructCodec3[Channel] {
       false,
       false,
       NameFieldManifest,
+      _root_.scala.None,
+      _root_.scala.None,
+      immutable$Map.empty[String, String],
+      immutable$Map.empty[String, String]
+    ),
+    new ThriftStructFieldInfo(
+      DeviceTypeField,
+      false,
+      false,
+      DeviceTypeFieldManifest,
       _root_.scala.None,
       _root_.scala.None,
       immutable$Map.empty[String, String],
@@ -76,6 +88,11 @@ object Channel extends ThriftStructCodec3[Channel] {
         {
           val field = original.name
           field
+        },
+      deviceType =
+        {
+          val field = original.deviceType
+          field
         }
     )
 
@@ -87,6 +104,7 @@ object Channel extends ThriftStructCodec3[Channel] {
 
     var codeOffset: Int = -1
     var nameOffset: Int = -1
+    var deviceType: Int = 0
 
     var _passthroughFields: Builder[(Short, TFieldBlob), immutable$Map[Short, TFieldBlob]] = null
     var _done = false
@@ -127,6 +145,20 @@ object Channel extends ThriftStructCodec3[Channel] {
                   )
                 )
             }
+          case 3 =>
+            _field.`type` match {
+              case TType.I32 =>
+    
+                deviceType = readDeviceTypeValue(_iprot)
+              case _actualType =>
+                val _expectedType = TType.I32
+                throw new TProtocolException(
+                  "Received wrong type for field 'deviceType' (expected=%s, actual=%s).".format(
+                    ttypeToString(_expectedType),
+                    ttypeToString(_actualType)
+                  )
+                )
+            }
           case _ =>
             if (_passthroughFields == null)
               _passthroughFields = immutable$Map.newBuilder[Short, TFieldBlob]
@@ -144,6 +176,7 @@ object Channel extends ThriftStructCodec3[Channel] {
       _iprot.offset,
       codeOffset,
       nameOffset,
+      deviceType,
       if (_passthroughFields == null)
         NoPassthroughFields
       else
@@ -160,6 +193,7 @@ object Channel extends ThriftStructCodec3[Channel] {
   private[this] def eagerDecode(_iprot: TProtocol): Channel = {
     var code: String = ""
     var name: String = ""
+    var deviceType: Int = 0
     var _passthroughFields: Builder[(Short, TFieldBlob), immutable$Map[Short, TFieldBlob]] = null
     var _done = false
 
@@ -196,6 +230,19 @@ object Channel extends ThriftStructCodec3[Channel] {
                   )
                 )
             }
+          case 3 =>
+            _field.`type` match {
+              case TType.I32 =>
+                deviceType = readDeviceTypeValue(_iprot)
+              case _actualType =>
+                val _expectedType = TType.I32
+                throw new TProtocolException(
+                  "Received wrong type for field 'deviceType' (expected=%s, actual=%s).".format(
+                    ttypeToString(_expectedType),
+                    ttypeToString(_actualType)
+                  )
+                )
+            }
           case _ =>
             if (_passthroughFields == null)
               _passthroughFields = immutable$Map.newBuilder[Short, TFieldBlob]
@@ -209,6 +256,7 @@ object Channel extends ThriftStructCodec3[Channel] {
     new Immutable(
       code,
       name,
+      deviceType,
       if (_passthroughFields == null)
         NoPassthroughFields
       else
@@ -218,14 +266,16 @@ object Channel extends ThriftStructCodec3[Channel] {
 
   def apply(
     code: String = "",
-    name: String = ""
+    name: String = "",
+    deviceType: Int = 0
   ): Channel =
     new Immutable(
       code,
-      name
+      name,
+      deviceType
     )
 
-  def unapply(_item: Channel): _root_.scala.Option[scala.Product2[String, String]] = _root_.scala.Some(_item)
+  def unapply(_item: Channel): _root_.scala.Option[scala.Product3[String, String, Int]] = _root_.scala.Some(_item)
 
 
   @inline private def readCodeValue(_iprot: TProtocol): String = {
@@ -256,6 +306,20 @@ object Channel extends ThriftStructCodec3[Channel] {
     _oprot.writeString(name_item)
   }
 
+  @inline private def readDeviceTypeValue(_iprot: TProtocol): Int = {
+    _iprot.readI32()
+  }
+
+  @inline private def writeDeviceTypeField(deviceType_item: Int, _oprot: TProtocol): Unit = {
+    _oprot.writeFieldBegin(DeviceTypeField)
+    writeDeviceTypeValue(deviceType_item, _oprot)
+    _oprot.writeFieldEnd()
+  }
+
+  @inline private def writeDeviceTypeValue(deviceType_item: Int, _oprot: TProtocol): Unit = {
+    _oprot.writeI32(deviceType_item)
+  }
+
 
   object Immutable extends ThriftStructCodec3[Channel] {
     override def encode(_item: Channel, _oproto: TProtocol): Unit = { _item.write(_oproto) }
@@ -271,14 +335,17 @@ object Channel extends ThriftStructCodec3[Channel] {
   class Immutable(
       val code: String,
       val name: String,
+      val deviceType: Int,
       override val _passthroughFields: immutable$Map[Short, TFieldBlob])
     extends Channel {
     def this(
       code: String = "",
-      name: String = ""
+      name: String = "",
+      deviceType: Int = 0
     ) = this(
       code,
       name,
+      deviceType,
       Map.empty
     )
   }
@@ -294,6 +361,7 @@ object Channel extends ThriftStructCodec3[Channel] {
       _end_offset: Int,
       codeOffset: Int,
       nameOffset: Int,
+      val deviceType: Int,
       override val _passthroughFields: immutable$Map[Short, TFieldBlob])
     extends Channel {
 
@@ -340,24 +408,27 @@ object Channel extends ThriftStructCodec3[Channel] {
     protected def _underlying_Channel: Channel
     override def code: String = _underlying_Channel.code
     override def name: String = _underlying_Channel.name
+    override def deviceType: Int = _underlying_Channel.deviceType
     override def _passthroughFields = _underlying_Channel._passthroughFields
   }
 }
 
 trait Channel
   extends ThriftStruct
-  with scala.Product2[String, String]
+  with scala.Product3[String, String, Int]
   with java.io.Serializable
 {
   import Channel._
 
   def code: String
   def name: String
+  def deviceType: Int
 
   def _passthroughFields: immutable$Map[Short, TFieldBlob] = immutable$Map.empty
 
   def _1 = code
   def _2 = name
+  def _3 = deviceType
 
 
   /**
@@ -384,6 +455,13 @@ trait Channel
               if (name ne null) {
                 writeNameValue(name, _oprot)
                 _root_.scala.Some(Channel.NameField)
+              } else {
+                _root_.scala.None
+              }
+            case 3 =>
+              if (true) {
+                writeDeviceTypeValue(deviceType, _oprot)
+                _root_.scala.Some(Channel.DeviceTypeField)
               } else {
                 _root_.scala.None
               }
@@ -415,17 +493,21 @@ trait Channel
   def setField(_blob: TFieldBlob): Channel = {
     var code: String = this.code
     var name: String = this.name
+    var deviceType: Int = this.deviceType
     var _passthroughFields = this._passthroughFields
     _blob.id match {
       case 1 =>
         code = readCodeValue(_blob.read)
       case 2 =>
         name = readNameValue(_blob.read)
+      case 3 =>
+        deviceType = readDeviceTypeValue(_blob.read)
       case _ => _passthroughFields += (_blob.id -> _blob)
     }
     new Immutable(
       code,
       name,
+      deviceType,
       _passthroughFields
     )
   }
@@ -438,17 +520,21 @@ trait Channel
   def unsetField(_fieldId: Short): Channel = {
     var code: String = this.code
     var name: String = this.name
+    var deviceType: Int = this.deviceType
 
     _fieldId match {
       case 1 =>
         code = ""
       case 2 =>
         name = ""
+      case 3 =>
+        deviceType = 0
       case _ =>
     }
     new Immutable(
       code,
       name,
+      deviceType,
       _passthroughFields - _fieldId
     )
   }
@@ -462,12 +548,15 @@ trait Channel
 
   def unsetName: Channel = unsetField(2)
 
+  def unsetDeviceType: Channel = unsetField(3)
+
 
   override def write(_oprot: TProtocol): Unit = {
     Channel.validate(this)
     _oprot.writeStructBegin(Struct)
     if (code ne null) writeCodeField(code, _oprot)
     if (name ne null) writeNameField(name, _oprot)
+    writeDeviceTypeField(deviceType, _oprot)
     if (_passthroughFields.nonEmpty) {
       _passthroughFields.values.foreach { _.write(_oprot) }
     }
@@ -478,11 +567,13 @@ trait Channel
   def copy(
     code: String = this.code,
     name: String = this.name,
+    deviceType: Int = this.deviceType,
     _passthroughFields: immutable$Map[Short, TFieldBlob] = this._passthroughFields
   ): Channel =
     new Immutable(
       code,
       name,
+      deviceType,
       _passthroughFields
     )
 
@@ -498,11 +589,12 @@ trait Channel
   override def toString: String = _root_.scala.runtime.ScalaRunTime._toString(this)
 
 
-  override def productArity: Int = 2
+  override def productArity: Int = 3
 
   override def productElement(n: Int): Any = n match {
     case 0 => this.code
     case 1 => this.name
+    case 2 => this.deviceType
     case _ => throw new IndexOutOfBoundsException(n.toString)
   }
 

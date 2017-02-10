@@ -29,11 +29,13 @@ object DiamondAccountResponse extends ThriftStructCodec3[DiamondAccountResponse]
   val CodeFieldManifest = implicitly[Manifest[String]]
   val AccountIdField = new TField("accountId", TType.I64, 2)
   val AccountIdFieldManifest = implicitly[Manifest[Long]]
-  val MemberIdField = new TField("memberId", TType.I64, 3)
+  val DeviceTypeField = new TField("deviceType", TType.I32, 3)
+  val DeviceTypeFieldManifest = implicitly[Manifest[Int]]
+  val MemberIdField = new TField("memberId", TType.I64, 4)
   val MemberIdFieldManifest = implicitly[Manifest[Long]]
-  val AmountField = new TField("amount", TType.I32, 4)
+  val AmountField = new TField("amount", TType.I32, 5)
   val AmountFieldManifest = implicitly[Manifest[Int]]
-  val GmtCreateField = new TField("gmtCreate", TType.I64, 5)
+  val GmtCreateField = new TField("gmtCreate", TType.I64, 6)
   val GmtCreateFieldManifest = implicitly[Manifest[Long]]
   val GmtUpdateField = new TField("gmtUpdate", TType.I64, 7)
   val GmtUpdateFieldManifest = implicitly[Manifest[Long]]
@@ -57,6 +59,16 @@ object DiamondAccountResponse extends ThriftStructCodec3[DiamondAccountResponse]
       false,
       false,
       AccountIdFieldManifest,
+      _root_.scala.None,
+      _root_.scala.None,
+      immutable$Map.empty[String, String],
+      immutable$Map.empty[String, String]
+    ),
+    new ThriftStructFieldInfo(
+      DeviceTypeField,
+      false,
+      false,
+      DeviceTypeFieldManifest,
       _root_.scala.None,
       _root_.scala.None,
       immutable$Map.empty[String, String],
@@ -125,6 +137,11 @@ object DiamondAccountResponse extends ThriftStructCodec3[DiamondAccountResponse]
           val field = original.accountId
           field
         },
+      deviceType =
+        {
+          val field = original.deviceType
+          field
+        },
       memberId =
         {
           val field = original.memberId
@@ -155,6 +172,7 @@ object DiamondAccountResponse extends ThriftStructCodec3[DiamondAccountResponse]
 
     var codeOffset: Int = -1
     var accountId: Long = 0L
+    var deviceType: Int = 0
     var memberId: Long = 0L
     var amount: Int = 0
     var gmtCreate: Long = 0L
@@ -201,6 +219,20 @@ object DiamondAccountResponse extends ThriftStructCodec3[DiamondAccountResponse]
             }
           case 3 =>
             _field.`type` match {
+              case TType.I32 =>
+    
+                deviceType = readDeviceTypeValue(_iprot)
+              case _actualType =>
+                val _expectedType = TType.I32
+                throw new TProtocolException(
+                  "Received wrong type for field 'deviceType' (expected=%s, actual=%s).".format(
+                    ttypeToString(_expectedType),
+                    ttypeToString(_actualType)
+                  )
+                )
+            }
+          case 4 =>
+            _field.`type` match {
               case TType.I64 =>
     
                 memberId = readMemberIdValue(_iprot)
@@ -213,7 +245,7 @@ object DiamondAccountResponse extends ThriftStructCodec3[DiamondAccountResponse]
                   )
                 )
             }
-          case 4 =>
+          case 5 =>
             _field.`type` match {
               case TType.I32 =>
     
@@ -227,7 +259,7 @@ object DiamondAccountResponse extends ThriftStructCodec3[DiamondAccountResponse]
                   )
                 )
             }
-          case 5 =>
+          case 6 =>
             _field.`type` match {
               case TType.I64 =>
     
@@ -272,6 +304,7 @@ object DiamondAccountResponse extends ThriftStructCodec3[DiamondAccountResponse]
       _iprot.offset,
       codeOffset,
       accountId,
+      deviceType,
       memberId,
       amount,
       gmtCreate,
@@ -292,6 +325,7 @@ object DiamondAccountResponse extends ThriftStructCodec3[DiamondAccountResponse]
   private[this] def eagerDecode(_iprot: TProtocol): DiamondAccountResponse = {
     var code: String = ""
     var accountId: Long = 0L
+    var deviceType: Int = 0
     var memberId: Long = 0L
     var amount: Int = 0
     var gmtCreate: Long = 0L
@@ -334,6 +368,19 @@ object DiamondAccountResponse extends ThriftStructCodec3[DiamondAccountResponse]
             }
           case 3 =>
             _field.`type` match {
+              case TType.I32 =>
+                deviceType = readDeviceTypeValue(_iprot)
+              case _actualType =>
+                val _expectedType = TType.I32
+                throw new TProtocolException(
+                  "Received wrong type for field 'deviceType' (expected=%s, actual=%s).".format(
+                    ttypeToString(_expectedType),
+                    ttypeToString(_actualType)
+                  )
+                )
+            }
+          case 4 =>
+            _field.`type` match {
               case TType.I64 =>
                 memberId = readMemberIdValue(_iprot)
               case _actualType =>
@@ -345,7 +392,7 @@ object DiamondAccountResponse extends ThriftStructCodec3[DiamondAccountResponse]
                   )
                 )
             }
-          case 4 =>
+          case 5 =>
             _field.`type` match {
               case TType.I32 =>
                 amount = readAmountValue(_iprot)
@@ -358,7 +405,7 @@ object DiamondAccountResponse extends ThriftStructCodec3[DiamondAccountResponse]
                   )
                 )
             }
-          case 5 =>
+          case 6 =>
             _field.`type` match {
               case TType.I64 =>
                 gmtCreate = readGmtCreateValue(_iprot)
@@ -397,6 +444,7 @@ object DiamondAccountResponse extends ThriftStructCodec3[DiamondAccountResponse]
     new Immutable(
       code,
       accountId,
+      deviceType,
       memberId,
       amount,
       gmtCreate,
@@ -411,6 +459,7 @@ object DiamondAccountResponse extends ThriftStructCodec3[DiamondAccountResponse]
   def apply(
     code: String = "",
     accountId: Long = 0L,
+    deviceType: Int = 0,
     memberId: Long = 0L,
     amount: Int = 0,
     gmtCreate: Long = 0L,
@@ -419,13 +468,14 @@ object DiamondAccountResponse extends ThriftStructCodec3[DiamondAccountResponse]
     new Immutable(
       code,
       accountId,
+      deviceType,
       memberId,
       amount,
       gmtCreate,
       gmtUpdate
     )
 
-  def unapply(_item: DiamondAccountResponse): _root_.scala.Option[scala.Product6[String, Long, Long, Int, Long, Long]] = _root_.scala.Some(_item)
+  def unapply(_item: DiamondAccountResponse): _root_.scala.Option[scala.Product7[String, Long, Int, Long, Int, Long, Long]] = _root_.scala.Some(_item)
 
 
   @inline private def readCodeValue(_iprot: TProtocol): String = {
@@ -454,6 +504,20 @@ object DiamondAccountResponse extends ThriftStructCodec3[DiamondAccountResponse]
 
   @inline private def writeAccountIdValue(accountId_item: Long, _oprot: TProtocol): Unit = {
     _oprot.writeI64(accountId_item)
+  }
+
+  @inline private def readDeviceTypeValue(_iprot: TProtocol): Int = {
+    _iprot.readI32()
+  }
+
+  @inline private def writeDeviceTypeField(deviceType_item: Int, _oprot: TProtocol): Unit = {
+    _oprot.writeFieldBegin(DeviceTypeField)
+    writeDeviceTypeValue(deviceType_item, _oprot)
+    _oprot.writeFieldEnd()
+  }
+
+  @inline private def writeDeviceTypeValue(deviceType_item: Int, _oprot: TProtocol): Unit = {
+    _oprot.writeI32(deviceType_item)
   }
 
   @inline private def readMemberIdValue(_iprot: TProtocol): Long = {
@@ -527,6 +591,7 @@ object DiamondAccountResponse extends ThriftStructCodec3[DiamondAccountResponse]
   class Immutable(
       val code: String,
       val accountId: Long,
+      val deviceType: Int,
       val memberId: Long,
       val amount: Int,
       val gmtCreate: Long,
@@ -536,6 +601,7 @@ object DiamondAccountResponse extends ThriftStructCodec3[DiamondAccountResponse]
     def this(
       code: String = "",
       accountId: Long = 0L,
+      deviceType: Int = 0,
       memberId: Long = 0L,
       amount: Int = 0,
       gmtCreate: Long = 0L,
@@ -543,6 +609,7 @@ object DiamondAccountResponse extends ThriftStructCodec3[DiamondAccountResponse]
     ) = this(
       code,
       accountId,
+      deviceType,
       memberId,
       amount,
       gmtCreate,
@@ -562,6 +629,7 @@ object DiamondAccountResponse extends ThriftStructCodec3[DiamondAccountResponse]
       _end_offset: Int,
       codeOffset: Int,
       val accountId: Long,
+      val deviceType: Int,
       val memberId: Long,
       val amount: Int,
       val gmtCreate: Long,
@@ -606,6 +674,7 @@ object DiamondAccountResponse extends ThriftStructCodec3[DiamondAccountResponse]
     protected def _underlying_DiamondAccountResponse: DiamondAccountResponse
     override def code: String = _underlying_DiamondAccountResponse.code
     override def accountId: Long = _underlying_DiamondAccountResponse.accountId
+    override def deviceType: Int = _underlying_DiamondAccountResponse.deviceType
     override def memberId: Long = _underlying_DiamondAccountResponse.memberId
     override def amount: Int = _underlying_DiamondAccountResponse.amount
     override def gmtCreate: Long = _underlying_DiamondAccountResponse.gmtCreate
@@ -616,13 +685,14 @@ object DiamondAccountResponse extends ThriftStructCodec3[DiamondAccountResponse]
 
 trait DiamondAccountResponse
   extends ThriftStruct
-  with scala.Product6[String, Long, Long, Int, Long, Long]
+  with scala.Product7[String, Long, Int, Long, Int, Long, Long]
   with java.io.Serializable
 {
   import DiamondAccountResponse._
 
   def code: String
   def accountId: Long
+  def deviceType: Int
   def memberId: Long
   def amount: Int
   def gmtCreate: Long
@@ -632,10 +702,11 @@ trait DiamondAccountResponse
 
   def _1 = code
   def _2 = accountId
-  def _3 = memberId
-  def _4 = amount
-  def _5 = gmtCreate
-  def _6 = gmtUpdate
+  def _3 = deviceType
+  def _4 = memberId
+  def _5 = amount
+  def _6 = gmtCreate
+  def _7 = gmtUpdate
 
 
   /**
@@ -667,19 +738,26 @@ trait DiamondAccountResponse
               }
             case 3 =>
               if (true) {
+                writeDeviceTypeValue(deviceType, _oprot)
+                _root_.scala.Some(DiamondAccountResponse.DeviceTypeField)
+              } else {
+                _root_.scala.None
+              }
+            case 4 =>
+              if (true) {
                 writeMemberIdValue(memberId, _oprot)
                 _root_.scala.Some(DiamondAccountResponse.MemberIdField)
               } else {
                 _root_.scala.None
               }
-            case 4 =>
+            case 5 =>
               if (true) {
                 writeAmountValue(amount, _oprot)
                 _root_.scala.Some(DiamondAccountResponse.AmountField)
               } else {
                 _root_.scala.None
               }
-            case 5 =>
+            case 6 =>
               if (true) {
                 writeGmtCreateValue(gmtCreate, _oprot)
                 _root_.scala.Some(DiamondAccountResponse.GmtCreateField)
@@ -721,6 +799,7 @@ trait DiamondAccountResponse
   def setField(_blob: TFieldBlob): DiamondAccountResponse = {
     var code: String = this.code
     var accountId: Long = this.accountId
+    var deviceType: Int = this.deviceType
     var memberId: Long = this.memberId
     var amount: Int = this.amount
     var gmtCreate: Long = this.gmtCreate
@@ -732,10 +811,12 @@ trait DiamondAccountResponse
       case 2 =>
         accountId = readAccountIdValue(_blob.read)
       case 3 =>
-        memberId = readMemberIdValue(_blob.read)
+        deviceType = readDeviceTypeValue(_blob.read)
       case 4 =>
-        amount = readAmountValue(_blob.read)
+        memberId = readMemberIdValue(_blob.read)
       case 5 =>
+        amount = readAmountValue(_blob.read)
+      case 6 =>
         gmtCreate = readGmtCreateValue(_blob.read)
       case 7 =>
         gmtUpdate = readGmtUpdateValue(_blob.read)
@@ -744,6 +825,7 @@ trait DiamondAccountResponse
     new Immutable(
       code,
       accountId,
+      deviceType,
       memberId,
       amount,
       gmtCreate,
@@ -760,6 +842,7 @@ trait DiamondAccountResponse
   def unsetField(_fieldId: Short): DiamondAccountResponse = {
     var code: String = this.code
     var accountId: Long = this.accountId
+    var deviceType: Int = this.deviceType
     var memberId: Long = this.memberId
     var amount: Int = this.amount
     var gmtCreate: Long = this.gmtCreate
@@ -771,10 +854,12 @@ trait DiamondAccountResponse
       case 2 =>
         accountId = 0L
       case 3 =>
-        memberId = 0L
+        deviceType = 0
       case 4 =>
-        amount = 0
+        memberId = 0L
       case 5 =>
+        amount = 0
+      case 6 =>
         gmtCreate = 0L
       case 7 =>
         gmtUpdate = 0L
@@ -783,6 +868,7 @@ trait DiamondAccountResponse
     new Immutable(
       code,
       accountId,
+      deviceType,
       memberId,
       amount,
       gmtCreate,
@@ -800,11 +886,13 @@ trait DiamondAccountResponse
 
   def unsetAccountId: DiamondAccountResponse = unsetField(2)
 
-  def unsetMemberId: DiamondAccountResponse = unsetField(3)
+  def unsetDeviceType: DiamondAccountResponse = unsetField(3)
 
-  def unsetAmount: DiamondAccountResponse = unsetField(4)
+  def unsetMemberId: DiamondAccountResponse = unsetField(4)
 
-  def unsetGmtCreate: DiamondAccountResponse = unsetField(5)
+  def unsetAmount: DiamondAccountResponse = unsetField(5)
+
+  def unsetGmtCreate: DiamondAccountResponse = unsetField(6)
 
   def unsetGmtUpdate: DiamondAccountResponse = unsetField(7)
 
@@ -814,6 +902,7 @@ trait DiamondAccountResponse
     _oprot.writeStructBegin(Struct)
     if (code ne null) writeCodeField(code, _oprot)
     writeAccountIdField(accountId, _oprot)
+    writeDeviceTypeField(deviceType, _oprot)
     writeMemberIdField(memberId, _oprot)
     writeAmountField(amount, _oprot)
     writeGmtCreateField(gmtCreate, _oprot)
@@ -828,6 +917,7 @@ trait DiamondAccountResponse
   def copy(
     code: String = this.code,
     accountId: Long = this.accountId,
+    deviceType: Int = this.deviceType,
     memberId: Long = this.memberId,
     amount: Int = this.amount,
     gmtCreate: Long = this.gmtCreate,
@@ -837,6 +927,7 @@ trait DiamondAccountResponse
     new Immutable(
       code,
       accountId,
+      deviceType,
       memberId,
       amount,
       gmtCreate,
@@ -856,15 +947,16 @@ trait DiamondAccountResponse
   override def toString: String = _root_.scala.runtime.ScalaRunTime._toString(this)
 
 
-  override def productArity: Int = 6
+  override def productArity: Int = 7
 
   override def productElement(n: Int): Any = n match {
     case 0 => this.code
     case 1 => this.accountId
-    case 2 => this.memberId
-    case 3 => this.amount
-    case 4 => this.gmtCreate
-    case 5 => this.gmtUpdate
+    case 2 => this.deviceType
+    case 3 => this.memberId
+    case 4 => this.amount
+    case 5 => this.gmtCreate
+    case 6 => this.gmtUpdate
     case _ => throw new IndexOutOfBoundsException(n.toString)
   }
 

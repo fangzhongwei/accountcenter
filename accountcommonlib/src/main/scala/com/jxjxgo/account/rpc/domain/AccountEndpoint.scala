@@ -32,13 +32,13 @@ import scala.language.higherKinds
 @javax.annotation.Generated(value = Array("com.twitter.scrooge.Compiler"))
 trait AccountEndpoint[+MM[_]] extends ThriftService {
   
-  def createAccount(traceId: String, memberId: Long): MM[com.jxjxgo.account.rpc.domain.AccountBaseResponse]
+  def createAccount(traceId: String, memberId: Long, deviceType: Int = 0): MM[com.jxjxgo.account.rpc.domain.AccountBaseResponse]
   
-  def getAccount(traceId: String, memberId: Long): MM[com.jxjxgo.account.rpc.domain.DiamondAccountResponse]
+  def getAccount(traceId: String, memberId: Long, deviceType: Int = 0): MM[com.jxjxgo.account.rpc.domain.DiamondAccountResponse]
   
-  def getPriceList(traceId: String): MM[com.jxjxgo.account.rpc.domain.PriceListResponse]
+  def getPriceList(traceId: String, deviceType: Int = 0): MM[com.jxjxgo.account.rpc.domain.PriceListResponse]
   
-  def getChannelList(traceId: String): MM[com.jxjxgo.account.rpc.domain.ChannelListResponse]
+  def getChannelList(traceId: String, deviceType: Int = 0): MM[com.jxjxgo.account.rpc.domain.ChannelListResponse]
   
   def deposit(traceId: String, request: com.jxjxgo.account.rpc.domain.DepositRequest): MM[com.jxjxgo.account.rpc.domain.DepositRequestResponse]
   
@@ -96,20 +96,20 @@ object AccountEndpoint { self =>
     extends AccountEndpoint[Future] {
     private[this] val __createAccount_service =
       ThriftServiceIface.resultFilter(self.CreateAccount) andThen serviceIface.createAccount
-    def createAccount(traceId: String, memberId: Long): Future[com.jxjxgo.account.rpc.domain.AccountBaseResponse] =
-      __createAccount_service(self.CreateAccount.Args(traceId, memberId))
+    def createAccount(traceId: String, memberId: Long, deviceType: Int = 0): Future[com.jxjxgo.account.rpc.domain.AccountBaseResponse] =
+      __createAccount_service(self.CreateAccount.Args(traceId, memberId, deviceType))
     private[this] val __getAccount_service =
       ThriftServiceIface.resultFilter(self.GetAccount) andThen serviceIface.getAccount
-    def getAccount(traceId: String, memberId: Long): Future[com.jxjxgo.account.rpc.domain.DiamondAccountResponse] =
-      __getAccount_service(self.GetAccount.Args(traceId, memberId))
+    def getAccount(traceId: String, memberId: Long, deviceType: Int = 0): Future[com.jxjxgo.account.rpc.domain.DiamondAccountResponse] =
+      __getAccount_service(self.GetAccount.Args(traceId, memberId, deviceType))
     private[this] val __getPriceList_service =
       ThriftServiceIface.resultFilter(self.GetPriceList) andThen serviceIface.getPriceList
-    def getPriceList(traceId: String): Future[com.jxjxgo.account.rpc.domain.PriceListResponse] =
-      __getPriceList_service(self.GetPriceList.Args(traceId))
+    def getPriceList(traceId: String, deviceType: Int = 0): Future[com.jxjxgo.account.rpc.domain.PriceListResponse] =
+      __getPriceList_service(self.GetPriceList.Args(traceId, deviceType))
     private[this] val __getChannelList_service =
       ThriftServiceIface.resultFilter(self.GetChannelList) andThen serviceIface.getChannelList
-    def getChannelList(traceId: String): Future[com.jxjxgo.account.rpc.domain.ChannelListResponse] =
-      __getChannelList_service(self.GetChannelList.Args(traceId))
+    def getChannelList(traceId: String, deviceType: Int = 0): Future[com.jxjxgo.account.rpc.domain.ChannelListResponse] =
+      __getChannelList_service(self.GetChannelList.Args(traceId, deviceType))
     private[this] val __deposit_service =
       ThriftServiceIface.resultFilter(self.Deposit) andThen serviceIface.deposit
     def deposit(traceId: String, request: com.jxjxgo.account.rpc.domain.DepositRequest): Future[com.jxjxgo.account.rpc.domain.DepositRequestResponse] =
@@ -139,6 +139,8 @@ object AccountEndpoint { self =>
       val TraceIdFieldManifest = implicitly[Manifest[String]]
       val MemberIdField = new TField("memberId", TType.I64, 2)
       val MemberIdFieldManifest = implicitly[Manifest[Long]]
+      val DeviceTypeField = new TField("deviceType", TType.I32, 3)
+      val DeviceTypeFieldManifest = implicitly[Manifest[Int]]
     
       /**
        * Field information in declaration order.
@@ -159,6 +161,16 @@ object AccountEndpoint { self =>
           false,
           false,
           MemberIdFieldManifest,
+          _root_.scala.None,
+          _root_.scala.None,
+          immutable$Map.empty[String, String],
+          immutable$Map.empty[String, String]
+        ),
+        new ThriftStructFieldInfo(
+          DeviceTypeField,
+          false,
+          false,
+          DeviceTypeFieldManifest,
           _root_.scala.None,
           _root_.scala.None,
           immutable$Map.empty[String, String],
@@ -186,6 +198,11 @@ object AccountEndpoint { self =>
             {
               val field = original.memberId
               field
+            },
+          deviceType =
+            {
+              val field = original.deviceType
+              field
             }
         )
     
@@ -196,6 +213,7 @@ object AccountEndpoint { self =>
       override def decode(_iprot: TProtocol): Args = {
         var traceId: String = null
         var memberId: Long = 0L
+        var deviceType: Int = 0
         var _passthroughFields: Builder[(Short, TFieldBlob), immutable$Map[Short, TFieldBlob]] = null
         var _done = false
     
@@ -232,6 +250,19 @@ object AccountEndpoint { self =>
                       )
                     )
                 }
+              case 3 =>
+                _field.`type` match {
+                  case TType.I32 =>
+                    deviceType = readDeviceTypeValue(_iprot)
+                  case _actualType =>
+                    val _expectedType = TType.I32
+                    throw new TProtocolException(
+                      "Received wrong type for field 'deviceType' (expected=%s, actual=%s).".format(
+                        ttypeToString(_expectedType),
+                        ttypeToString(_actualType)
+                      )
+                    )
+                }
               case _ =>
                 if (_passthroughFields == null)
                   _passthroughFields = immutable$Map.newBuilder[Short, TFieldBlob]
@@ -245,6 +276,7 @@ object AccountEndpoint { self =>
         new Args(
           traceId,
           memberId,
+          deviceType,
           if (_passthroughFields == null)
             NoPassthroughFields
           else
@@ -254,14 +286,16 @@ object AccountEndpoint { self =>
     
       def apply(
         traceId: String,
-        memberId: Long
+        memberId: Long,
+        deviceType: Int = 0
       ): Args =
         new Args(
           traceId,
-          memberId
+          memberId,
+          deviceType
         )
     
-      def unapply(_item: Args): _root_.scala.Option[scala.Product2[String, Long]] = _root_.scala.Some(_item)
+      def unapply(_item: Args): _root_.scala.Option[scala.Product3[String, Long, Int]] = _root_.scala.Some(_item)
     
     
       @inline private def readTraceIdValue(_iprot: TProtocol): String = {
@@ -292,29 +326,47 @@ object AccountEndpoint { self =>
         _oprot.writeI64(memberId_item)
       }
     
+      @inline private def readDeviceTypeValue(_iprot: TProtocol): Int = {
+        _iprot.readI32()
+      }
+    
+      @inline private def writeDeviceTypeField(deviceType_item: Int, _oprot: TProtocol): Unit = {
+        _oprot.writeFieldBegin(DeviceTypeField)
+        writeDeviceTypeValue(deviceType_item, _oprot)
+        _oprot.writeFieldEnd()
+      }
+    
+      @inline private def writeDeviceTypeValue(deviceType_item: Int, _oprot: TProtocol): Unit = {
+        _oprot.writeI32(deviceType_item)
+      }
+    
     
     }
     
     class Args(
         val traceId: String,
         val memberId: Long,
+        val deviceType: Int,
         val _passthroughFields: immutable$Map[Short, TFieldBlob])
       extends ThriftStruct
-      with scala.Product2[String, Long]
+      with scala.Product3[String, Long, Int]
       with java.io.Serializable
     {
       import Args._
       def this(
         traceId: String,
-        memberId: Long
+        memberId: Long,
+        deviceType: Int = 0
       ) = this(
         traceId,
         memberId,
+        deviceType,
         Map.empty
       )
     
       def _1 = traceId
       def _2 = memberId
+      def _3 = deviceType
     
     
     
@@ -323,6 +375,7 @@ object AccountEndpoint { self =>
         _oprot.writeStructBegin(Struct)
         if (traceId ne null) writeTraceIdField(traceId, _oprot)
         writeMemberIdField(memberId, _oprot)
+        writeDeviceTypeField(deviceType, _oprot)
         if (_passthroughFields.nonEmpty) {
           _passthroughFields.values.foreach { _.write(_oprot) }
         }
@@ -333,11 +386,13 @@ object AccountEndpoint { self =>
       def copy(
         traceId: String = this.traceId,
         memberId: Long = this.memberId,
+        deviceType: Int = this.deviceType,
         _passthroughFields: immutable$Map[Short, TFieldBlob] = this._passthroughFields
       ): Args =
         new Args(
           traceId,
           memberId,
+          deviceType,
           _passthroughFields
         )
     
@@ -353,11 +408,12 @@ object AccountEndpoint { self =>
       override def toString: String = _root_.scala.runtime.ScalaRunTime._toString(this)
     
     
-      override def productArity: Int = 2
+      override def productArity: Int = 3
     
       override def productElement(n: Int): Any = n match {
         case 0 => this.traceId
         case 1 => this.memberId
+        case 2 => this.deviceType
         case _ => throw new IndexOutOfBoundsException(n.toString)
       }
     
@@ -584,6 +640,8 @@ object AccountEndpoint { self =>
       val TraceIdFieldManifest = implicitly[Manifest[String]]
       val MemberIdField = new TField("memberId", TType.I64, 2)
       val MemberIdFieldManifest = implicitly[Manifest[Long]]
+      val DeviceTypeField = new TField("deviceType", TType.I32, 3)
+      val DeviceTypeFieldManifest = implicitly[Manifest[Int]]
     
       /**
        * Field information in declaration order.
@@ -604,6 +662,16 @@ object AccountEndpoint { self =>
           false,
           false,
           MemberIdFieldManifest,
+          _root_.scala.None,
+          _root_.scala.None,
+          immutable$Map.empty[String, String],
+          immutable$Map.empty[String, String]
+        ),
+        new ThriftStructFieldInfo(
+          DeviceTypeField,
+          false,
+          false,
+          DeviceTypeFieldManifest,
           _root_.scala.None,
           _root_.scala.None,
           immutable$Map.empty[String, String],
@@ -631,6 +699,11 @@ object AccountEndpoint { self =>
             {
               val field = original.memberId
               field
+            },
+          deviceType =
+            {
+              val field = original.deviceType
+              field
             }
         )
     
@@ -641,6 +714,7 @@ object AccountEndpoint { self =>
       override def decode(_iprot: TProtocol): Args = {
         var traceId: String = null
         var memberId: Long = 0L
+        var deviceType: Int = 0
         var _passthroughFields: Builder[(Short, TFieldBlob), immutable$Map[Short, TFieldBlob]] = null
         var _done = false
     
@@ -677,6 +751,19 @@ object AccountEndpoint { self =>
                       )
                     )
                 }
+              case 3 =>
+                _field.`type` match {
+                  case TType.I32 =>
+                    deviceType = readDeviceTypeValue(_iprot)
+                  case _actualType =>
+                    val _expectedType = TType.I32
+                    throw new TProtocolException(
+                      "Received wrong type for field 'deviceType' (expected=%s, actual=%s).".format(
+                        ttypeToString(_expectedType),
+                        ttypeToString(_actualType)
+                      )
+                    )
+                }
               case _ =>
                 if (_passthroughFields == null)
                   _passthroughFields = immutable$Map.newBuilder[Short, TFieldBlob]
@@ -690,6 +777,7 @@ object AccountEndpoint { self =>
         new Args(
           traceId,
           memberId,
+          deviceType,
           if (_passthroughFields == null)
             NoPassthroughFields
           else
@@ -699,14 +787,16 @@ object AccountEndpoint { self =>
     
       def apply(
         traceId: String,
-        memberId: Long
+        memberId: Long,
+        deviceType: Int = 0
       ): Args =
         new Args(
           traceId,
-          memberId
+          memberId,
+          deviceType
         )
     
-      def unapply(_item: Args): _root_.scala.Option[scala.Product2[String, Long]] = _root_.scala.Some(_item)
+      def unapply(_item: Args): _root_.scala.Option[scala.Product3[String, Long, Int]] = _root_.scala.Some(_item)
     
     
       @inline private def readTraceIdValue(_iprot: TProtocol): String = {
@@ -737,29 +827,47 @@ object AccountEndpoint { self =>
         _oprot.writeI64(memberId_item)
       }
     
+      @inline private def readDeviceTypeValue(_iprot: TProtocol): Int = {
+        _iprot.readI32()
+      }
+    
+      @inline private def writeDeviceTypeField(deviceType_item: Int, _oprot: TProtocol): Unit = {
+        _oprot.writeFieldBegin(DeviceTypeField)
+        writeDeviceTypeValue(deviceType_item, _oprot)
+        _oprot.writeFieldEnd()
+      }
+    
+      @inline private def writeDeviceTypeValue(deviceType_item: Int, _oprot: TProtocol): Unit = {
+        _oprot.writeI32(deviceType_item)
+      }
+    
     
     }
     
     class Args(
         val traceId: String,
         val memberId: Long,
+        val deviceType: Int,
         val _passthroughFields: immutable$Map[Short, TFieldBlob])
       extends ThriftStruct
-      with scala.Product2[String, Long]
+      with scala.Product3[String, Long, Int]
       with java.io.Serializable
     {
       import Args._
       def this(
         traceId: String,
-        memberId: Long
+        memberId: Long,
+        deviceType: Int = 0
       ) = this(
         traceId,
         memberId,
+        deviceType,
         Map.empty
       )
     
       def _1 = traceId
       def _2 = memberId
+      def _3 = deviceType
     
     
     
@@ -768,6 +876,7 @@ object AccountEndpoint { self =>
         _oprot.writeStructBegin(Struct)
         if (traceId ne null) writeTraceIdField(traceId, _oprot)
         writeMemberIdField(memberId, _oprot)
+        writeDeviceTypeField(deviceType, _oprot)
         if (_passthroughFields.nonEmpty) {
           _passthroughFields.values.foreach { _.write(_oprot) }
         }
@@ -778,11 +887,13 @@ object AccountEndpoint { self =>
       def copy(
         traceId: String = this.traceId,
         memberId: Long = this.memberId,
+        deviceType: Int = this.deviceType,
         _passthroughFields: immutable$Map[Short, TFieldBlob] = this._passthroughFields
       ): Args =
         new Args(
           traceId,
           memberId,
+          deviceType,
           _passthroughFields
         )
     
@@ -798,11 +909,12 @@ object AccountEndpoint { self =>
       override def toString: String = _root_.scala.runtime.ScalaRunTime._toString(this)
     
     
-      override def productArity: Int = 2
+      override def productArity: Int = 3
     
       override def productElement(n: Int): Any = n match {
         case 0 => this.traceId
         case 1 => this.memberId
+        case 2 => this.deviceType
         case _ => throw new IndexOutOfBoundsException(n.toString)
       }
     
@@ -1027,6 +1139,8 @@ object AccountEndpoint { self =>
       val Struct = new TStruct("getPriceList_args")
       val TraceIdField = new TField("traceId", TType.STRING, 1)
       val TraceIdFieldManifest = implicitly[Manifest[String]]
+      val DeviceTypeField = new TField("deviceType", TType.I32, 2)
+      val DeviceTypeFieldManifest = implicitly[Manifest[Int]]
     
       /**
        * Field information in declaration order.
@@ -1037,6 +1151,16 @@ object AccountEndpoint { self =>
           false,
           false,
           TraceIdFieldManifest,
+          _root_.scala.None,
+          _root_.scala.None,
+          immutable$Map.empty[String, String],
+          immutable$Map.empty[String, String]
+        ),
+        new ThriftStructFieldInfo(
+          DeviceTypeField,
+          false,
+          false,
+          DeviceTypeFieldManifest,
           _root_.scala.None,
           _root_.scala.None,
           immutable$Map.empty[String, String],
@@ -1059,6 +1183,11 @@ object AccountEndpoint { self =>
             {
               val field = original.traceId
               field
+            },
+          deviceType =
+            {
+              val field = original.deviceType
+              field
             }
         )
     
@@ -1068,6 +1197,7 @@ object AccountEndpoint { self =>
     
       override def decode(_iprot: TProtocol): Args = {
         var traceId: String = null
+        var deviceType: Int = 0
         var _passthroughFields: Builder[(Short, TFieldBlob), immutable$Map[Short, TFieldBlob]] = null
         var _done = false
     
@@ -1091,6 +1221,19 @@ object AccountEndpoint { self =>
                       )
                     )
                 }
+              case 2 =>
+                _field.`type` match {
+                  case TType.I32 =>
+                    deviceType = readDeviceTypeValue(_iprot)
+                  case _actualType =>
+                    val _expectedType = TType.I32
+                    throw new TProtocolException(
+                      "Received wrong type for field 'deviceType' (expected=%s, actual=%s).".format(
+                        ttypeToString(_expectedType),
+                        ttypeToString(_actualType)
+                      )
+                    )
+                }
               case _ =>
                 if (_passthroughFields == null)
                   _passthroughFields = immutable$Map.newBuilder[Short, TFieldBlob]
@@ -1103,6 +1246,7 @@ object AccountEndpoint { self =>
     
         new Args(
           traceId,
+          deviceType,
           if (_passthroughFields == null)
             NoPassthroughFields
           else
@@ -1111,13 +1255,15 @@ object AccountEndpoint { self =>
       }
     
       def apply(
-        traceId: String
+        traceId: String,
+        deviceType: Int = 0
       ): Args =
         new Args(
-          traceId
+          traceId,
+          deviceType
         )
     
-      def unapply(_item: Args): _root_.scala.Option[String] = _root_.scala.Some(_item.traceId)
+      def unapply(_item: Args): _root_.scala.Option[scala.Product2[String, Int]] = _root_.scala.Some(_item)
     
     
       @inline private def readTraceIdValue(_iprot: TProtocol): String = {
@@ -1134,25 +1280,43 @@ object AccountEndpoint { self =>
         _oprot.writeString(traceId_item)
       }
     
+      @inline private def readDeviceTypeValue(_iprot: TProtocol): Int = {
+        _iprot.readI32()
+      }
+    
+      @inline private def writeDeviceTypeField(deviceType_item: Int, _oprot: TProtocol): Unit = {
+        _oprot.writeFieldBegin(DeviceTypeField)
+        writeDeviceTypeValue(deviceType_item, _oprot)
+        _oprot.writeFieldEnd()
+      }
+    
+      @inline private def writeDeviceTypeValue(deviceType_item: Int, _oprot: TProtocol): Unit = {
+        _oprot.writeI32(deviceType_item)
+      }
+    
     
     }
     
     class Args(
         val traceId: String,
+        val deviceType: Int,
         val _passthroughFields: immutable$Map[Short, TFieldBlob])
       extends ThriftStruct
-      with scala.Product1[String]
+      with scala.Product2[String, Int]
       with java.io.Serializable
     {
       import Args._
       def this(
-        traceId: String
+        traceId: String,
+        deviceType: Int = 0
       ) = this(
         traceId,
+        deviceType,
         Map.empty
       )
     
       def _1 = traceId
+      def _2 = deviceType
     
     
     
@@ -1160,6 +1324,7 @@ object AccountEndpoint { self =>
         Args.validate(this)
         _oprot.writeStructBegin(Struct)
         if (traceId ne null) writeTraceIdField(traceId, _oprot)
+        writeDeviceTypeField(deviceType, _oprot)
         if (_passthroughFields.nonEmpty) {
           _passthroughFields.values.foreach { _.write(_oprot) }
         }
@@ -1169,10 +1334,12 @@ object AccountEndpoint { self =>
     
       def copy(
         traceId: String = this.traceId,
+        deviceType: Int = this.deviceType,
         _passthroughFields: immutable$Map[Short, TFieldBlob] = this._passthroughFields
       ): Args =
         new Args(
           traceId,
+          deviceType,
           _passthroughFields
         )
     
@@ -1188,10 +1355,11 @@ object AccountEndpoint { self =>
       override def toString: String = _root_.scala.runtime.ScalaRunTime._toString(this)
     
     
-      override def productArity: Int = 1
+      override def productArity: Int = 2
     
       override def productElement(n: Int): Any = n match {
         case 0 => this.traceId
+        case 1 => this.deviceType
         case _ => throw new IndexOutOfBoundsException(n.toString)
       }
     
@@ -1416,6 +1584,8 @@ object AccountEndpoint { self =>
       val Struct = new TStruct("getChannelList_args")
       val TraceIdField = new TField("traceId", TType.STRING, 1)
       val TraceIdFieldManifest = implicitly[Manifest[String]]
+      val DeviceTypeField = new TField("deviceType", TType.I32, 3)
+      val DeviceTypeFieldManifest = implicitly[Manifest[Int]]
     
       /**
        * Field information in declaration order.
@@ -1426,6 +1596,16 @@ object AccountEndpoint { self =>
           false,
           false,
           TraceIdFieldManifest,
+          _root_.scala.None,
+          _root_.scala.None,
+          immutable$Map.empty[String, String],
+          immutable$Map.empty[String, String]
+        ),
+        new ThriftStructFieldInfo(
+          DeviceTypeField,
+          false,
+          false,
+          DeviceTypeFieldManifest,
           _root_.scala.None,
           _root_.scala.None,
           immutable$Map.empty[String, String],
@@ -1448,6 +1628,11 @@ object AccountEndpoint { self =>
             {
               val field = original.traceId
               field
+            },
+          deviceType =
+            {
+              val field = original.deviceType
+              field
             }
         )
     
@@ -1457,6 +1642,7 @@ object AccountEndpoint { self =>
     
       override def decode(_iprot: TProtocol): Args = {
         var traceId: String = null
+        var deviceType: Int = 0
         var _passthroughFields: Builder[(Short, TFieldBlob), immutable$Map[Short, TFieldBlob]] = null
         var _done = false
     
@@ -1480,6 +1666,19 @@ object AccountEndpoint { self =>
                       )
                     )
                 }
+              case 3 =>
+                _field.`type` match {
+                  case TType.I32 =>
+                    deviceType = readDeviceTypeValue(_iprot)
+                  case _actualType =>
+                    val _expectedType = TType.I32
+                    throw new TProtocolException(
+                      "Received wrong type for field 'deviceType' (expected=%s, actual=%s).".format(
+                        ttypeToString(_expectedType),
+                        ttypeToString(_actualType)
+                      )
+                    )
+                }
               case _ =>
                 if (_passthroughFields == null)
                   _passthroughFields = immutable$Map.newBuilder[Short, TFieldBlob]
@@ -1492,6 +1691,7 @@ object AccountEndpoint { self =>
     
         new Args(
           traceId,
+          deviceType,
           if (_passthroughFields == null)
             NoPassthroughFields
           else
@@ -1500,13 +1700,15 @@ object AccountEndpoint { self =>
       }
     
       def apply(
-        traceId: String
+        traceId: String,
+        deviceType: Int = 0
       ): Args =
         new Args(
-          traceId
+          traceId,
+          deviceType
         )
     
-      def unapply(_item: Args): _root_.scala.Option[String] = _root_.scala.Some(_item.traceId)
+      def unapply(_item: Args): _root_.scala.Option[scala.Product2[String, Int]] = _root_.scala.Some(_item)
     
     
       @inline private def readTraceIdValue(_iprot: TProtocol): String = {
@@ -1523,25 +1725,43 @@ object AccountEndpoint { self =>
         _oprot.writeString(traceId_item)
       }
     
+      @inline private def readDeviceTypeValue(_iprot: TProtocol): Int = {
+        _iprot.readI32()
+      }
+    
+      @inline private def writeDeviceTypeField(deviceType_item: Int, _oprot: TProtocol): Unit = {
+        _oprot.writeFieldBegin(DeviceTypeField)
+        writeDeviceTypeValue(deviceType_item, _oprot)
+        _oprot.writeFieldEnd()
+      }
+    
+      @inline private def writeDeviceTypeValue(deviceType_item: Int, _oprot: TProtocol): Unit = {
+        _oprot.writeI32(deviceType_item)
+      }
+    
     
     }
     
     class Args(
         val traceId: String,
+        val deviceType: Int,
         val _passthroughFields: immutable$Map[Short, TFieldBlob])
       extends ThriftStruct
-      with scala.Product1[String]
+      with scala.Product2[String, Int]
       with java.io.Serializable
     {
       import Args._
       def this(
-        traceId: String
+        traceId: String,
+        deviceType: Int = 0
       ) = this(
         traceId,
+        deviceType,
         Map.empty
       )
     
       def _1 = traceId
+      def _2 = deviceType
     
     
     
@@ -1549,6 +1769,7 @@ object AccountEndpoint { self =>
         Args.validate(this)
         _oprot.writeStructBegin(Struct)
         if (traceId ne null) writeTraceIdField(traceId, _oprot)
+        writeDeviceTypeField(deviceType, _oprot)
         if (_passthroughFields.nonEmpty) {
           _passthroughFields.values.foreach { _.write(_oprot) }
         }
@@ -1558,10 +1779,12 @@ object AccountEndpoint { self =>
     
       def copy(
         traceId: String = this.traceId,
+        deviceType: Int = this.deviceType,
         _passthroughFields: immutable$Map[Short, TFieldBlob] = this._passthroughFields
       ): Args =
         new Args(
           traceId,
+          deviceType,
           _passthroughFields
         )
     
@@ -1577,10 +1800,11 @@ object AccountEndpoint { self =>
       override def toString: String = _root_.scala.runtime.ScalaRunTime._toString(this)
     
     
-      override def productArity: Int = 1
+      override def productArity: Int = 2
     
       override def productElement(n: Int): Any = n match {
         case 0 => this.traceId
+        case 1 => this.deviceType
         case _ => throw new IndexOutOfBoundsException(n.toString)
       }
     
@@ -3136,13 +3360,13 @@ object AccountEndpoint { self =>
 
   trait FutureIface extends AccountEndpoint[Future] {
     
-    def createAccount(traceId: String, memberId: Long): Future[com.jxjxgo.account.rpc.domain.AccountBaseResponse]
+    def createAccount(traceId: String, memberId: Long, deviceType: Int = 0): Future[com.jxjxgo.account.rpc.domain.AccountBaseResponse]
     
-    def getAccount(traceId: String, memberId: Long): Future[com.jxjxgo.account.rpc.domain.DiamondAccountResponse]
+    def getAccount(traceId: String, memberId: Long, deviceType: Int = 0): Future[com.jxjxgo.account.rpc.domain.DiamondAccountResponse]
     
-    def getPriceList(traceId: String): Future[com.jxjxgo.account.rpc.domain.PriceListResponse]
+    def getPriceList(traceId: String, deviceType: Int = 0): Future[com.jxjxgo.account.rpc.domain.PriceListResponse]
     
-    def getChannelList(traceId: String): Future[com.jxjxgo.account.rpc.domain.ChannelListResponse]
+    def getChannelList(traceId: String, deviceType: Int = 0): Future[com.jxjxgo.account.rpc.domain.ChannelListResponse]
     
     def deposit(traceId: String, request: com.jxjxgo.account.rpc.domain.DepositRequest): Future[com.jxjxgo.account.rpc.domain.DepositRequestResponse]
     

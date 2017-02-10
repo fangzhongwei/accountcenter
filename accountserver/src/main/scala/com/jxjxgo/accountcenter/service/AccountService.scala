@@ -96,7 +96,7 @@ class AccountServiceImpl @Inject()(accountRepository: AccountRepository) extends
           case Some(accountOrderRow) =>
             if (order.payStatus != 1) throw ServiceException.make(ErrorCode.EC_ORDER_ORDER_FINISHED)
             if (amount.compare(order.amount) != 0) throw ServiceException.make(ErrorCode.EC_ORDER_AMOUNT_NOT_MATCHED)
-            accountRepository.depositSuccess(order.memberId, accountOrderRow.accountOrderNo, paymentOrderNo, accountOrderRow.diamondAmount)
+            accountRepository.depositSuccess(order.accountId, accountOrderRow.accountOrderNo, paymentOrderNo, accountOrderRow.diamondAmount)
           case None =>
             throw ServiceException.make(ErrorCode.EC_ORDER_PAYMENT_ORDER_NOT_FOUND)
         }
