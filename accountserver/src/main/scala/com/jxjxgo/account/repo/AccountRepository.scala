@@ -3,9 +3,9 @@ package com.jxjxgo.account.repo
 import com.jxjxgo.account.rpc.domain.SettleRequest
 import com.jxjxgo.mysql.connection.DBComponent
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
-import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
   * Created by fangzhongwei on 2016/11/21.
@@ -21,7 +21,7 @@ trait AccountRepository extends Tables {
     TmDiamondAccountAutoInc += tmDiamondAccountRow
   }
 
-  def getPriceList(deviceType:Int): Seq[TmDiamodPriceRow] = {
+  def getPriceList(deviceType: Int): Seq[TmDiamodPriceRow] = {
     Await.result(db.run {
       TmDiamodPrice.sortBy(_.price).filter(_.status === true).result
     }, Duration.Inf)
@@ -50,13 +50,13 @@ trait AccountRepository extends Tables {
     }, Duration.Inf)
   }
 
-  def getAccount(memberId: Long, deviceType:Int): Option[TmDiamondAccountRow] = {
+  def getAccount(memberId: Long, deviceType: Int): Option[TmDiamondAccountRow] = {
     Await.result(db.run {
-      TmDiamondAccount.filter(_.memberId === memberId).result.headOption
+      TmDiamondAccount.filter(r => r.memberId === memberId && r.deviceType === deviceType).result.headOption
     }, Duration.Inf)
   }
 
-  def getChannelList(deviceType:Int): Seq[TmChannelRow] = {
+  def getChannelList(deviceType: Int): Seq[TmChannelRow] = {
     Await.result(db.run {
       TmChannel.sortBy(_.priority desc).filter(_.status === true).result
     }, Duration.Inf)
@@ -70,9 +70,12 @@ trait AccountRepository extends Tables {
     Await.result(db.run(tran), Duration.Inf)
   }
 
-
   def nextOrderId(): Long = {
     Await.result(db.run(sql"""select nextval('seq_order_id')""".as[(Long)]), Duration.Inf).head
+  }
+
+  def nextAccountId(): Long = {
+    Await.result(db.run(sql"""select nextval('seq_account_id')""".as[(Long)]), Duration.Inf).head
   }
 
   def getPaymentOrder(paymentOrderNo: String): Option[TPaymentOrderRow] = {

@@ -161,34 +161,30 @@ trait Tables extends DBImpl {
   lazy val TmDiamodPrice = new TableQuery(tag => new TmDiamodPrice(tag))
 
   /** Entity class storing rows of table TmDiamondAccount
-    *
-    * @param accountId  Database column account_id SqlType(int8), PrimaryKey
-    * @param deviceType Database column device_type SqlType(int4)
-    * @param memberId   Database column member_id SqlType(int8)
-    * @param amount     Database column amount SqlType(int4)
-    * @param gmtCreate  Database column gmt_create SqlType(timestamp)
-    * @param gmtUpdate  Database column gmt_update SqlType(timestamp) */
-  case class TmDiamondAccountRow(accountId: Long, deviceType: Int, memberId: Long, amount: Int, gmtCreate: java.sql.Timestamp, gmtUpdate: java.sql.Timestamp)
-
+    *  @param accountId Database column account_id SqlType(int8), PrimaryKey
+    *  @param memberId Database column member_id SqlType(int8)
+    *  @param deviceType Database column device_type SqlType(int4)
+    *  @param amount Database column amount SqlType(int4)
+    *  @param gmtCreate Database column gmt_create SqlType(timestamp)
+    *  @param gmtUpdate Database column gmt_update SqlType(timestamp) */
+  case class TmDiamondAccountRow(accountId: Long, memberId: Long, deviceType: Int, amount: Int, gmtCreate: java.sql.Timestamp, gmtUpdate: java.sql.Timestamp)
   /** GetResult implicit for fetching TmDiamondAccountRow objects using plain SQL queries */
-  implicit def GetResultTmDiamondAccountRow(implicit e0: GR[Long], e1: GR[Int], e2: GR[java.sql.Timestamp]): GR[TmDiamondAccountRow] = GR {
+  implicit def GetResultTmDiamondAccountRow(implicit e0: GR[Long], e1: GR[Int], e2: GR[java.sql.Timestamp]): GR[TmDiamondAccountRow] = GR{
     prs => import prs._
-      TmDiamondAccountRow.tupled((<<[Long], <<[Int], <<[Long], <<[Int], <<[java.sql.Timestamp], <<[java.sql.Timestamp]))
+      TmDiamondAccountRow.tupled((<<[Long], <<[Long], <<[Int], <<[Int], <<[java.sql.Timestamp], <<[java.sql.Timestamp]))
   }
-
   /** Table description of table tm_diamond_account. Objects of this class serve as prototypes for rows in queries. */
   class TmDiamondAccount(_tableTag: Tag) extends profile.api.Table[TmDiamondAccountRow](_tableTag, "tm_diamond_account") {
-    def * = (accountId, deviceType, memberId, amount, gmtCreate, gmtUpdate) <> (TmDiamondAccountRow.tupled, TmDiamondAccountRow.unapply)
-
+    def * = (accountId, memberId, deviceType, amount, gmtCreate, gmtUpdate) <> (TmDiamondAccountRow.tupled, TmDiamondAccountRow.unapply)
     /** Maps whole row to an option. Useful for outer joins. */
-    def ? = (Rep.Some(accountId), Rep.Some(deviceType), Rep.Some(memberId), Rep.Some(amount), Rep.Some(gmtCreate), Rep.Some(gmtUpdate)).shaped.<>({ r => import r._; _1.map(_ => TmDiamondAccountRow.tupled((_1.get, _2.get, _3.get, _4.get, _5.get, _6.get))) }, (_: Any) => throw new Exception("Inserting into ? projection not supported."))
+    def ? = (Rep.Some(accountId), Rep.Some(memberId), Rep.Some(deviceType), Rep.Some(amount), Rep.Some(gmtCreate), Rep.Some(gmtUpdate)).shaped.<>({r=>import r._; _1.map(_=> TmDiamondAccountRow.tupled((_1.get, _2.get, _3.get, _4.get, _5.get, _6.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
 
     /** Database column account_id SqlType(int8), PrimaryKey */
     val accountId: Rep[Long] = column[Long]("account_id", O.PrimaryKey)
-    /** Database column device_type SqlType(int4) */
-    val deviceType: Rep[Int] = column[Int]("device_type")
     /** Database column member_id SqlType(int8) */
     val memberId: Rep[Long] = column[Long]("member_id")
+    /** Database column device_type SqlType(int4) */
+    val deviceType: Rep[Int] = column[Int]("device_type")
     /** Database column amount SqlType(int4) */
     val amount: Rep[Int] = column[Int]("amount")
     /** Database column gmt_create SqlType(timestamp) */
@@ -196,7 +192,6 @@ trait Tables extends DBImpl {
     /** Database column gmt_update SqlType(timestamp) */
     val gmtUpdate: Rep[java.sql.Timestamp] = column[java.sql.Timestamp]("gmt_update")
   }
-
   /** Collection-like TableQuery object for table TmDiamondAccount */
   lazy val TmDiamondAccount = new TableQuery(tag => new TmDiamondAccount(tag))
 
