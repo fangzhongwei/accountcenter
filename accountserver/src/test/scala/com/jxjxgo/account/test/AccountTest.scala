@@ -14,7 +14,7 @@ object AccountTest {
 //    println(Await.result(endpoint.getAccount("qqq", 1)))
 //    println(Await.result(endpoint.createAccount("qqq", 1)))
 //    println(Await.result(endpoint.queryDepositOrder("qqq", "aaa")))
-//
+
     println(Await.result(endpoint.getChannelList("qqq")))
     println(Await.result(endpoint.getPriceList("qqq")))
   }

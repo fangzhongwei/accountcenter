@@ -105,7 +105,7 @@ class AccountEndpoint$FinagleClient(
     val FailuresScope = scopedStats.scope("createAccount").scope("failures")
   }
   
-  def createAccount(traceId: String, memberId: Long, deviceType: Int = 0): Future[com.jxjxgo.account.rpc.domain.AccountBaseResponse] = {
+  def createAccount(traceId: String, memberId: Long, deviceType: Int): Future[com.jxjxgo.account.rpc.domain.AccountBaseResponse] = {
     __stats_createAccount.RequestsCounter.incr()
     val inputArgs = CreateAccount.Args(traceId, memberId, deviceType)
     val replyDeserializer: Array[Byte] => _root_.com.twitter.util.Try[com.jxjxgo.account.rpc.domain.AccountBaseResponse] =
@@ -156,7 +156,7 @@ class AccountEndpoint$FinagleClient(
     val FailuresScope = scopedStats.scope("getAccount").scope("failures")
   }
   
-  def getAccount(traceId: String, memberId: Long, deviceType: Int = 0): Future[com.jxjxgo.account.rpc.domain.DiamondAccountResponse] = {
+  def getAccount(traceId: String, memberId: Long, deviceType: Int): Future[com.jxjxgo.account.rpc.domain.DiamondAccountResponse] = {
     __stats_getAccount.RequestsCounter.incr()
     val inputArgs = GetAccount.Args(traceId, memberId, deviceType)
     val replyDeserializer: Array[Byte] => _root_.com.twitter.util.Try[com.jxjxgo.account.rpc.domain.DiamondAccountResponse] =
@@ -207,7 +207,7 @@ class AccountEndpoint$FinagleClient(
     val FailuresScope = scopedStats.scope("getPriceList").scope("failures")
   }
   
-  def getPriceList(traceId: String, deviceType: Int = 0): Future[com.jxjxgo.account.rpc.domain.PriceListResponse] = {
+  def getPriceList(traceId: String, deviceType: Int): Future[com.jxjxgo.account.rpc.domain.PriceListResponse] = {
     __stats_getPriceList.RequestsCounter.incr()
     val inputArgs = GetPriceList.Args(traceId, deviceType)
     val replyDeserializer: Array[Byte] => _root_.com.twitter.util.Try[com.jxjxgo.account.rpc.domain.PriceListResponse] =
@@ -258,7 +258,7 @@ class AccountEndpoint$FinagleClient(
     val FailuresScope = scopedStats.scope("getChannelList").scope("failures")
   }
   
-  def getChannelList(traceId: String, deviceType: Int = 0): Future[com.jxjxgo.account.rpc.domain.ChannelListResponse] = {
+  def getChannelList(traceId: String, deviceType: Int): Future[com.jxjxgo.account.rpc.domain.ChannelListResponse] = {
     __stats_getChannelList.RequestsCounter.incr()
     val inputArgs = GetChannelList.Args(traceId, deviceType)
     val replyDeserializer: Array[Byte] => _root_.com.twitter.util.Try[com.jxjxgo.account.rpc.domain.ChannelListResponse] =

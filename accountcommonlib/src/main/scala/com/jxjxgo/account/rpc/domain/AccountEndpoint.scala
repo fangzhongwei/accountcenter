@@ -32,13 +32,13 @@ import scala.language.higherKinds
 @javax.annotation.Generated(value = Array("com.twitter.scrooge.Compiler"))
 trait AccountEndpoint[+MM[_]] extends ThriftService {
   
-  def createAccount(traceId: String, memberId: Long, deviceType: Int = 0): MM[com.jxjxgo.account.rpc.domain.AccountBaseResponse]
+  def createAccount(traceId: String, memberId: Long, deviceType: Int): MM[com.jxjxgo.account.rpc.domain.AccountBaseResponse]
   
-  def getAccount(traceId: String, memberId: Long, deviceType: Int = 0): MM[com.jxjxgo.account.rpc.domain.DiamondAccountResponse]
+  def getAccount(traceId: String, memberId: Long, deviceType: Int): MM[com.jxjxgo.account.rpc.domain.DiamondAccountResponse]
   
-  def getPriceList(traceId: String, deviceType: Int = 0): MM[com.jxjxgo.account.rpc.domain.PriceListResponse]
+  def getPriceList(traceId: String, deviceType: Int): MM[com.jxjxgo.account.rpc.domain.PriceListResponse]
   
-  def getChannelList(traceId: String, deviceType: Int = 0): MM[com.jxjxgo.account.rpc.domain.ChannelListResponse]
+  def getChannelList(traceId: String, deviceType: Int): MM[com.jxjxgo.account.rpc.domain.ChannelListResponse]
   
   def deposit(traceId: String, request: com.jxjxgo.account.rpc.domain.DepositRequest): MM[com.jxjxgo.account.rpc.domain.DepositRequestResponse]
   
@@ -96,19 +96,19 @@ object AccountEndpoint { self =>
     extends AccountEndpoint[Future] {
     private[this] val __createAccount_service =
       ThriftServiceIface.resultFilter(self.CreateAccount) andThen serviceIface.createAccount
-    def createAccount(traceId: String, memberId: Long, deviceType: Int = 0): Future[com.jxjxgo.account.rpc.domain.AccountBaseResponse] =
+    def createAccount(traceId: String, memberId: Long, deviceType: Int): Future[com.jxjxgo.account.rpc.domain.AccountBaseResponse] =
       __createAccount_service(self.CreateAccount.Args(traceId, memberId, deviceType))
     private[this] val __getAccount_service =
       ThriftServiceIface.resultFilter(self.GetAccount) andThen serviceIface.getAccount
-    def getAccount(traceId: String, memberId: Long, deviceType: Int = 0): Future[com.jxjxgo.account.rpc.domain.DiamondAccountResponse] =
+    def getAccount(traceId: String, memberId: Long, deviceType: Int): Future[com.jxjxgo.account.rpc.domain.DiamondAccountResponse] =
       __getAccount_service(self.GetAccount.Args(traceId, memberId, deviceType))
     private[this] val __getPriceList_service =
       ThriftServiceIface.resultFilter(self.GetPriceList) andThen serviceIface.getPriceList
-    def getPriceList(traceId: String, deviceType: Int = 0): Future[com.jxjxgo.account.rpc.domain.PriceListResponse] =
+    def getPriceList(traceId: String, deviceType: Int): Future[com.jxjxgo.account.rpc.domain.PriceListResponse] =
       __getPriceList_service(self.GetPriceList.Args(traceId, deviceType))
     private[this] val __getChannelList_service =
       ThriftServiceIface.resultFilter(self.GetChannelList) andThen serviceIface.getChannelList
-    def getChannelList(traceId: String, deviceType: Int = 0): Future[com.jxjxgo.account.rpc.domain.ChannelListResponse] =
+    def getChannelList(traceId: String, deviceType: Int): Future[com.jxjxgo.account.rpc.domain.ChannelListResponse] =
       __getChannelList_service(self.GetChannelList.Args(traceId, deviceType))
     private[this] val __deposit_service =
       ThriftServiceIface.resultFilter(self.Deposit) andThen serviceIface.deposit
@@ -287,7 +287,7 @@ object AccountEndpoint { self =>
       def apply(
         traceId: String,
         memberId: Long,
-        deviceType: Int = 0
+        deviceType: Int
       ): Args =
         new Args(
           traceId,
@@ -356,7 +356,7 @@ object AccountEndpoint { self =>
       def this(
         traceId: String,
         memberId: Long,
-        deviceType: Int = 0
+        deviceType: Int
       ) = this(
         traceId,
         memberId,
@@ -788,7 +788,7 @@ object AccountEndpoint { self =>
       def apply(
         traceId: String,
         memberId: Long,
-        deviceType: Int = 0
+        deviceType: Int
       ): Args =
         new Args(
           traceId,
@@ -857,7 +857,7 @@ object AccountEndpoint { self =>
       def this(
         traceId: String,
         memberId: Long,
-        deviceType: Int = 0
+        deviceType: Int
       ) = this(
         traceId,
         memberId,
@@ -1256,7 +1256,7 @@ object AccountEndpoint { self =>
     
       def apply(
         traceId: String,
-        deviceType: Int = 0
+        deviceType: Int
       ): Args =
         new Args(
           traceId,
@@ -1308,7 +1308,7 @@ object AccountEndpoint { self =>
       import Args._
       def this(
         traceId: String,
-        deviceType: Int = 0
+        deviceType: Int
       ) = this(
         traceId,
         deviceType,
@@ -1701,7 +1701,7 @@ object AccountEndpoint { self =>
     
       def apply(
         traceId: String,
-        deviceType: Int = 0
+        deviceType: Int
       ): Args =
         new Args(
           traceId,
@@ -1753,7 +1753,7 @@ object AccountEndpoint { self =>
       import Args._
       def this(
         traceId: String,
-        deviceType: Int = 0
+        deviceType: Int
       ) = this(
         traceId,
         deviceType,
@@ -3360,13 +3360,13 @@ object AccountEndpoint { self =>
 
   trait FutureIface extends AccountEndpoint[Future] {
     
-    def createAccount(traceId: String, memberId: Long, deviceType: Int = 0): Future[com.jxjxgo.account.rpc.domain.AccountBaseResponse]
+    def createAccount(traceId: String, memberId: Long, deviceType: Int): Future[com.jxjxgo.account.rpc.domain.AccountBaseResponse]
     
-    def getAccount(traceId: String, memberId: Long, deviceType: Int = 0): Future[com.jxjxgo.account.rpc.domain.DiamondAccountResponse]
+    def getAccount(traceId: String, memberId: Long, deviceType: Int): Future[com.jxjxgo.account.rpc.domain.DiamondAccountResponse]
     
-    def getPriceList(traceId: String, deviceType: Int = 0): Future[com.jxjxgo.account.rpc.domain.PriceListResponse]
+    def getPriceList(traceId: String, deviceType: Int): Future[com.jxjxgo.account.rpc.domain.PriceListResponse]
     
-    def getChannelList(traceId: String, deviceType: Int = 0): Future[com.jxjxgo.account.rpc.domain.ChannelListResponse]
+    def getChannelList(traceId: String, deviceType: Int): Future[com.jxjxgo.account.rpc.domain.ChannelListResponse]
     
     def deposit(traceId: String, request: com.jxjxgo.account.rpc.domain.DepositRequest): Future[com.jxjxgo.account.rpc.domain.DepositRequestResponse]
     
