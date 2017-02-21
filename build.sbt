@@ -18,6 +18,7 @@ lazy val accountcommonlib = (project in file("accountcommonlib")).settings(commo
 
 lazy val accountserver = (project in file("accountserver")).settings(commonSettings: _*).settings(
   name := """accountserver""",
+  mainClass in (Compile, run) := Some("com.jxjxgo.accountcenter.server.ApplicationServer"),
   libraryDependencies ++= Seq(
     "com.jxjxgo.common" % "common-db_2.11" % "1.0",
     "com.jxjxgo.common" % "common-error_2.11" % "1.0",
